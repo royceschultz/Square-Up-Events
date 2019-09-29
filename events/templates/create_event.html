@@ -1,0 +1,9 @@
+{% extends 'base.html'%}
+{%block content%}
+<h2>{{note}}</h2>
+<form action="{%url 'create event'%}" method="post">
+  {%csrf_token%}
+  {{form}}
+  <input type="submit" name="" value="Create">
+</form>
+{% endblock content%}

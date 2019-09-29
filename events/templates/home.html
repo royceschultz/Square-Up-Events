@@ -1,0 +1,10 @@
+{% extends 'base.html'%}
+  {%block content%}
+    {%for event in events%}
+    <div class="">
+      <a href="{%url 'event detail' event.id%}">
+        <h2>{{event.name}}</h2>
+      </a>
+    </div>
+    {%endfor%}
+  {% endblock content%}
