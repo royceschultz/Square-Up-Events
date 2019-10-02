@@ -1,10 +1,17 @@
 {% extends 'base.html'%}
   {%block content%}
     {%for event in events%}
-    <div class="">
-      <a href="{%url 'event detail' event.id%}">
-        <h2>{{event.name}}</h2>
-      </a>
-    </div>
+      <div class="card my-3">
+        <div class="card-header">
+          <a href="{%url 'event detail' event.id%}"> {{event.name}} </a>
+        </div>
+        <div class="card-body">
+          <h5 class="card-title">{{event.category}}</h5>
+          <p class="card-text">{{event.details}}</p>
+        </div>
+      </div>
+      <div class="">
+
+      </div>
     {%endfor%}
   {% endblock content%}

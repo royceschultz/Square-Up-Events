@@ -17,11 +17,17 @@ from django.conf.urls import url
 from django.contrib import admin
 from django.urls import include, path
 
-from events import views
+from django.contrib.auth import views as auth_views
+from events import views as event_views
+from users import views as user_views
 
 urlpatterns = [
     url('admin/', admin.site.urls),
-    url(r'^$',views.home, name='home'),
-    url(r'^event/(\d+)/', views.event_detail, name='event detail'),
-    url(r'^event/create/', views.create_event, name='create event'),
+    url(r'^$',event_views.home, name='home'),
+    url(r'^event/(\d+)/', event_views.event_detail, name='event detail'),
+    url(r'^event/create/', event_views.create_event, name='create event'),
+    url('^register/',user_views.register,name='register'),
+    url('^login/',auth_views.LoginView.as_view(template_name='login.html') ,name='login'),
+    url('^logout/',auth_views.LogoutView.as_view(template_name='logout.html') ,name='logout'),
+    url('^profile/',user_views.profile,name='profile'),
 ]
