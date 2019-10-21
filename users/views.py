@@ -13,11 +13,11 @@ def register(request):
             return redirect('login')
         else:
             messages.warning(request,'Something is wrong with your form')
-            return render(request,'register.html',{'form':filled_form})
+            return render(request,'users/register.html',{'form':filled_form})
     else:
         form = UserRegisterForm()
-    return render(request, 'register.html',{'form':form})
+    return render(request, 'users/register.html',{'form':form})
 
 @login_required
 def profile(request):
-    return render(request, 'profile.html')
+    return render(request, 'users/profile.html')
