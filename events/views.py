@@ -1,37 +1,38 @@
-from django.shortcuts import render
+from django.shortcuts import render, redirect
 from django.http import HttpResponse
 from django.http import Http404
+from django.contrib import messages
 
 from .models import Event
 from .forms import EventForm
 
 def home(request):
-    events = Event.objects.all()
+    events = Event.objects.all().order_by('-event_date')
     return render(request, 'home.html',{'events':events})
 
 def event_detail(request, id):
     try:
         event = Event.objects.get(id=id)
-    except Room.DoesNotExist:
-        raise Http404('room not found')
+    except Event.DoesNotExist:
+        raise Http404('Event does\'t exist')
     return render(request, 'event_detail.html',{'event':event})
 
 def create_event(request):
-    if request.method == 'POST':
+    if not request.user.is_authenticated: # if user is not logged in
+        # Unlike the @login_required decorator, this displays a friendly error message
+        messages.warning(request,'You must be logged in to create an event')
+        return redirect('login')
+    if request.method == 'POST': # if request is submitting form data
         filled_form = EventForm(request.POST)
         if filled_form.is_valid():
+            filled_form.instance.author = request.user # fill in author with current user
             filled_form.save()
-            note = 'Event Created'
-            new_form = EventForm()
-            return render(request,'create_event.html',{'form':new_form,'note':note})
+            eventName = filled_form.cleaned_data.get('name')
+            messages.success(request,f'{eventName} has been created!')
+            return redirect('home')
         else:
-            note = 'there\'s an error'
-            return render(request,'create_event.html',{'form':filled_form,'note':note})
-    else:
+            messages.warning(request,'Something went wrong!')
+            return render(request,'create_event.html',{'form':filled_form})
+    else: # If logged in user is accessing the page through a normal GET request
         form = EventForm()
         return render(request, 'create_event.html',{'form':form})
-
-
-
-
-# Create your views here.

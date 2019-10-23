@@ -3,12 +3,26 @@
     {%for event in events%}
       <div class="card my-3">
         <div class="card-header">
-          <a href="{%url 'event detail' event.id%}"> {{event.name}} </a>
+          <h2 class="d-inline">
+            <a href="{%url 'event detail' event.id%}"> {{event.name|capfirst}} </a>
+          </h2>
+          <h4 class="d-inline">by {{event.author}}</h4>
+          <h3>{{event.category}}</h3>
+
+          {% if event.author.id == user.id %}
+            <a class="btn btn-primary" href="#">Edit</a>
+            <p>Only display functionality is implemented. TODO: Edit event form</p>
+          {% endif %}
         </div>
-        <div class="card-body">
-          <h5 class="card-title">{{event.category}}</h5>
+        <div class="card-body text-nowrap">
+          <p class="card-text">Location: {{event.location}}</p>
           <p class="card-text">{{event.details}}</p>
+          <p class="card-text">Time: {{event.event_date}}</p>
+
+          <p class="card-text text-muted d-inline">Created: {{event.create_date}}</p>
+          <p class="card-text text-muted d-inline">Last Modified: {{event.last_modified}}</p>
         </div>
+
       </div>
       <div class="">
 

@@ -25,14 +25,14 @@ from django.conf import settings
 from django.conf.urls.static import static
 
 urlpatterns = [
-    url('admin/', admin.site.urls),
-    url(r'^$',event_views.home, name='home'),
+    url(r'^admin/', admin.site.urls),
+    url(r'^$',event_views.home, name='home'), # List events
     url(r'^event/(\d+)/', event_views.event_detail, name='event detail'),
     url(r'^event/create/', event_views.create_event, name='create event'),
-    url('^register/',user_views.register,name='register'),
-    url('^login/',auth_views.LoginView.as_view(template_name='users/login.html') ,name='login'),
-    url('^logout/',auth_views.LogoutView.as_view(template_name='users/logout.html') ,name='logout'),
-    url('^profile/',user_views.profile,name='profile'),
+    url(r'^register/',user_views.register,name='register'),
+    url(r'^login/',auth_views.LoginView.as_view(template_name='users/login.html') ,name='login'),
+    url(r'^logout/',auth_views.LogoutView.as_view(template_name='users/logout.html') ,name='logout'),
+    url(r'^profile/',user_views.profile,name='profile'),
     url('^profile_edit/', user_views.edit_profile, name = 'edit_profile')
 ]
 
