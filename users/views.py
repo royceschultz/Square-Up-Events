@@ -22,15 +22,15 @@ def register(request):
 def profile(request):
     return render(request, 'users/profile.html')
 
-def edit_profile():
+def edit_profile(request):
     if request.method == 'POST':
         form = EditProfileForm(request.POST, instance = request.user)
 
         if form.is_valid():
             form.save()
-            return redirect('users/profile.html')
+            return redirect('/profile')
 
-        else:
-            form = EditProfileForm(instance = request.user)
-            args = {'form' : form}
-            return render(request, 'users/edit_profile.html', args)
+    else:
+        form = EditProfileForm(instance = request.user)
+        args = {'form' : form}
+        return render(request, 'users/edit_profile.html', args)
