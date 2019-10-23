@@ -22,13 +22,18 @@ def register(request):
 def profile(request):
     return render(request, 'users/profile.html')
 
+@login_required
 def edit_profile(request):
     if request.method == 'POST':
         form = EditProfileForm(request.POST, instance = request.user)
 
         if form.is_valid():
             form.save()
+            messages.success(request,f'Changes have been made to your form')
             return redirect('/profile')
+        else:
+            messages.warning(request,'Something is wrong with your form')
+            return render(request, 'users/edit_profile.html', {'form' : form})
 
     else:
         form = EditProfileForm(instance = request.user)

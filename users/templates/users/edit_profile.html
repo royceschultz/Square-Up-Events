@@ -5,8 +5,8 @@
 <br>
   <div class = 'container'>
     <form method = 'post'>
-      {% csrf_token%}
-      {{form.as_p}}
+      {% csrf_token %}
+    {{ form | crispy }}
     </br>
     </div>
       <button type = 'submit' class = 'btn-outline-secondary'> Submit </button>
