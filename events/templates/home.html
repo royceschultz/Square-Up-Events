@@ -4,6 +4,7 @@
       <div class="card my-3">
         <div class="card-header">
           <a href="{%url 'event detail' event.id%}"> {{event.name}} </a>
+          <p>by {{event.author}}</p>
         </div>
         <div class="card-body">
           <h5 class="card-title">{{event.category}}</h5>

@@ -1,4 +1,4 @@
-from django.shortcuts import render
+from django.shortcuts import render, redirect
 from django.http import HttpResponse
 from django.http import Http404
 from django.contrib import messages
@@ -7,7 +7,7 @@ from .models import Event
 from .forms import EventForm
 
 def home(request):
-    events = Event.objects.all()
+    events = Event.objects.all().order_by('-event_date')
     return render(request, 'home.html',{'events':events})
 
 def event_detail(request, id):
@@ -18,17 +18,21 @@ def event_detail(request, id):
     return render(request, 'event_detail.html',{'event':event})
 
 def create_event(request):
-    if request.method == 'POST':
+    if not request.user.is_authenticated: # if user is not logged in
+        messages.warning(request,'You must be logged in to create an event')
+        return redirect('login')
+    if request.method == 'POST': # if request is submitting form data
         filled_form = EventForm(request.POST)
         if filled_form.is_valid():
+            filled_form.instance.author = request.user # fill in author with current user
             filled_form.save()
             eventName = filled_form.cleaned_data.get('name')
             messages.success(request,f'{eventName} has been created!')
-            return render(request,'home.html')
+            return redirect('home')
         else:
             messages.warning(request,'Something went wrong!')
             return render(request,'create_event.html',{'form':filled_form})
-    else:
+    else: # If logged in user is accessing the page through a normal GET request
         form = EventForm()
         return render(request, 'create_event.html',{'form':form})
 
