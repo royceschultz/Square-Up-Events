@@ -1,6 +1,7 @@
 from django.shortcuts import render
 from django.http import HttpResponse
 from django.http import Http404
+from django.contrib import messages
 
 from .models import Event
 from .forms import EventForm
@@ -21,12 +22,12 @@ def create_event(request):
         filled_form = EventForm(request.POST)
         if filled_form.is_valid():
             filled_form.save()
-            note = 'Event Created'
-            new_form = EventForm()
-            return render(request,'create_event.html',{'form':new_form,'note':note})
+            eventName = filled_form.cleaned_data.get('name')
+            messages.success(request,f'{eventName} has been created!')
+            return render(request,'home.html')
         else:
-            note = 'there\'s an error'
-            return render(request,'create_event.html',{'form':filled_form,'note':note})
+            messages.warning(request,'Something went wrong!')
+            return render(request,'create_event.html',{'form':filled_form})
     else:
         form = EventForm()
         return render(request, 'create_event.html',{'form':form})
