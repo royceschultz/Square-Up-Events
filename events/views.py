@@ -13,12 +13,13 @@ def home(request):
 def event_detail(request, id):
     try:
         event = Event.objects.get(id=id)
-    except Room.DoesNotExist:
-        raise Http404('room not found')
+    except Event.DoesNotExist:
+        raise Http404('Event does\'t exist')
     return render(request, 'event_detail.html',{'event':event})
 
 def create_event(request):
     if not request.user.is_authenticated: # if user is not logged in
+        # Unlike the @login_required decorator, this displays a friendly error message
         messages.warning(request,'You must be logged in to create an event')
         return redirect('login')
     if request.method == 'POST': # if request is submitting form data
@@ -35,6 +36,3 @@ def create_event(request):
     else: # If logged in user is accessing the page through a normal GET request
         form = EventForm()
         return render(request, 'create_event.html',{'form':form})
-
-
-# Create your views here.
