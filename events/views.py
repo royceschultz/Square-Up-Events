@@ -32,6 +32,4 @@ def create_event(request):
         return render(request, 'create_event.html',{'form':form})
 
 
-
-
 # Create your views here.
