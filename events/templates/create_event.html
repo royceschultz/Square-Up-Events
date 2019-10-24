@@ -2,9 +2,9 @@
 {% load crispy_forms_tags %}
 {% block content %}
 <h2>{{note}}</h2>
-<form action="{%url 'create event'%}" method="post">
+<form action="" method="POST">
   {% csrf_token %}
   {{ form|crispy }}
-  <input type="submit" name="" value="Create">
+  <input type="submit" name="" value="Save">
 </form>
 {% endblock content %}

@@ -36,3 +36,19 @@ def create_event(request):
     else: # If logged in user is accessing the page through a normal GET request
         form = EventForm()
         return render(request, 'create_event.html',{'form':form})
+
+
+def edit_event(request, id):
+    event = Event.objects.get(id=id)
+    form =EventForm( instance =event)
+    if request.method == 'POST':
+        form = EventForm( request.POST, instance =event)
+        if form.is_valid():
+            form.save()
+            messages.success(request,f'Changes have been made to your event')
+            return redirect('home')
+        else:
+            messages.warning(request,'Something is wrong with your form')
+            return render(request, 'create_event.html', {'form' : form})
+
+    return render(request, 'create_event.html', {'form': form})
