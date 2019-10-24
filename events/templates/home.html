@@ -4,9 +4,12 @@
       <div class="card my-3">
         <div class="card-header">
           <h2 class="d-inline">
-            <a href="{%url 'event detail' event.id%}"> {{event.name|capfirst}} </a>
+            <a href="{% url 'event detail' event.id %}"> {{event.name|capfirst}} </a>
           </h2>
-          <h4 class="d-inline">by {{event.author}}</h4>
+          <h4 class="d-inline">by
+            <a href="{% url 'profile' event.author.id %}">{{event.author}}</a>
+            <img src="{{ event.author.profile.image.url }}" class="rounded-circle" height="40px" alt="">
+          </h4>
           <h3>{{event.category}}</h3>
 
           {% if event.author.id == user.id %}

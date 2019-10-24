@@ -1,6 +1,9 @@
 from django.shortcuts import render, redirect
 from django.contrib import messages
 from django.contrib.auth.decorators import login_required
+from django.http import Http404
+
+from.models import User
 from .forms import UserRegisterForm, EditProfileForm
 
 def register(request):
@@ -19,8 +22,13 @@ def register(request):
     return render(request, 'users/register.html',{'form':form})
 
 @login_required
-def profile(request):
-    return render(request, 'users/profile.html')
+def profile(request, id):
+    try:
+        user = User.objects.get(id=id)
+        print(user)
+    except User.DoesNotExist:
+        raise Http404('Could not find user')
+    return render(request, 'users/profile.html',{'userProfile':user})
 
 @login_required
 def edit_profile(request):

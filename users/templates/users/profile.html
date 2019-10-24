@@ -3,18 +3,20 @@
 
 {% block content %}
 </br>
-<div class = 'text-right'>
 
-  <a href = '/profile_edit' class="btn btn-outline-secondary">Edit Profile</a>
-</div>
+{% if userProfile.id == user.id %}
+  <div class = 'text-right'>
+    <a href = "{% url 'edit profile' %}" class="btn btn-outline-secondary">Edit Profile</a>
+  </div>
+{% endif %}
 <br>
   <div class="text-center">
     <div class="">
-      <img src="{{ user.profile.image.url }}" class="rounded-circle account-image" height="200px">
+      <img src="{{ userProfile.profile.image.url }}" class="rounded-circle account-image" height="200px">
       <div class="  ">
         <br>
-        <h2 class="account-heading">{{ user.username }}</h2>
-        <p class="text-secondary">{{ user.email }}</p>
+        <h2 class="account-heading">{{ userProfile.username }}</h2>
+        <p class="text-secondary">{{ userProfile.email }}</p>
       </div>
     </div>
     <!-- FORM HERE -->
