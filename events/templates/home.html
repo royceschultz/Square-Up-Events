@@ -8,6 +8,7 @@
           </h2>
           <h4 class="d-inline">by
             <a href="{% url 'profile' event.author.id %}">{{event.author}}</a>
+            <img src="{{ event.author.profile.image.url }}" class="rounded-circle" height="40px" alt="">
           </h4>
           <h3>{{event.category}}</h3>
 

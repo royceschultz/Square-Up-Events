@@ -6,7 +6,7 @@
 
 {% if userProfile.id == user.id %}
   <div class = 'text-right'>
-    <a href = '/profile_edit' class="btn btn-outline-secondary">Edit Profile</a>
+    <a href = "{% url 'edit profile' %}" class="btn btn-outline-secondary">Edit Profile</a>
   </div>
 {% endif %}
 <br>
