@@ -38,7 +38,7 @@ def edit_profile(request):
         if form.is_valid():
             form.save()
             messages.success(request,f'Changes have been made to your form')
-            return redirect('/profile')
+            return redirect('profile', request.user.id)
         else:
             messages.warning(request,'Something is wrong with your form')
             return render(request, 'users/edit_profile.html', {'form' : form})
