@@ -2,7 +2,6 @@ from django.shortcuts import render, redirect
 from django.contrib import messages
 from django.contrib.auth.decorators import login_required
 from django.http import Http404
-from django.urls import reverse
 
 from.models import User
 from .forms import UserRegisterForm, EditProfileForm
