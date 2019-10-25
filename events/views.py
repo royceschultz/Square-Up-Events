@@ -2,6 +2,7 @@ from django.shortcuts import render, redirect
 from django.http import HttpResponse
 from django.http import Http404
 from django.contrib import messages
+from django.shortcuts import redirect
 
 from .models import Event
 from .forms import EventForm
@@ -39,14 +40,19 @@ def create_event(request):
 
 
 def edit_event(request, id):
-    event = Event.objects.get(id=id)
+
+    try:
+        event = Event.objects.get(id=id)
+
+    except Event.DoesNotExist:
+        raise Http404('Event does\'t exist')
     form =EventForm( instance =event)
     if request.method == 'POST':
         form = EventForm( request.POST, instance =event)
         if form.is_valid():
             form.save()
             messages.success(request,f'Changes have been made to your event')
-            return redirect('home')
+            return redirect('event detail',id)
         else:
             messages.warning(request,'Something is wrong with your form')
             return render(request, 'create_event.html', {'form' : form})
