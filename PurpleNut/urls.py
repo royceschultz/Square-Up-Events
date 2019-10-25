@@ -34,7 +34,7 @@ urlpatterns = [
     url(r'^logout/',auth_views.LogoutView.as_view(template_name='users/logout.html') ,name='logout'),
 
     
-    url(r'^event_edit/(\d+)', event_views.edit_event, name='event edit')
+    url(r'^event_edit/(\d+)', event_views.edit_event, name='event edit'),
 
 
     url(r'^profile/(\d+)/',user_views.profile,name='profile'),
