@@ -32,9 +32,13 @@ urlpatterns = [
     url(r'^register/',user_views.register,name='register'),
     url(r'^login/',auth_views.LoginView.as_view(template_name='users/login.html') ,name='login'),
     url(r'^logout/',auth_views.LogoutView.as_view(template_name='users/logout.html') ,name='logout'),
-    url(r'^profile/',user_views.profile,name='profile'),
-    url(r'^profile_edit/', user_views.edit_profile, name = 'edit_profile'),
+
+    
     url(r'^event_edit/(\d+)', event_views.edit_event, name='event edit')
+
+
+    url(r'^profile/(\d+)/',user_views.profile,name='profile'),
+    url('^profile/edit/', user_views.edit_profile, name = 'edit profile')
 
 ]
 
