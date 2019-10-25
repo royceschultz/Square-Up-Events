@@ -2,6 +2,7 @@ from django.shortcuts import render, redirect
 from django.contrib import messages
 from django.contrib.auth.decorators import login_required
 from django.http import Http404
+from django.urls import reverse
 
 from.models import User
 from .forms import UserRegisterForm, EditProfileForm
@@ -38,7 +39,7 @@ def edit_profile(request):
         if form.is_valid():
             form.save()
             messages.success(request,f'Changes have been made to your form')
-            return redirect('/profile')
+            return redirect('profile', request.user.id)
         else:
             messages.warning(request,'Something is wrong with your form')
             return render(request, 'users/edit_profile.html', {'form' : form})
