@@ -4,7 +4,7 @@ from django.contrib.auth.decorators import login_required
 from django.http import Http404
 
 from.models import User
-from .forms import UserRegisterForm, EditProfileForm
+from .forms import UserRegisterForm, EditProfileForm, ProfileUpdateForm
 
 def register(request):
     if request.method == 'POST':
@@ -33,17 +33,20 @@ def profile(request, id):
 @login_required
 def edit_profile(request):
     if request.method == 'POST':
-        form = EditProfileForm(request.POST, instance = request.user)
-
-        if form.is_valid():
-            form.save()
+        u_form = EditProfileForm(request.POST, instance = request.user)
+        p_form = ProfileUpdateForm(request.POST, request.FILES, instance = request.user.profile)
+        if u_form.is_valid() and p_form.is_valid():
+            u_form.save()
+            p_form.save()
             messages.success(request,f'Changes have been made to your form')
             return redirect('profile', request.user.id)
         else:
             messages.warning(request,'Something is wrong with your form')
-            return render(request, 'users/edit_profile.html', {'form' : form})
+            #return render(request, 'users/edit_profile.html', {'form' : form})
 
     else:
-        form = EditProfileForm(instance = request.user)
-        args = {'form' : form}
-        return render(request, 'users/edit_profile.html', args)
+        u_form = EditProfileForm(instance = request.user)
+        p_form = ProfileUpdateForm(instance = request.user.profile)
+    args = {'u_form' : u_form,
+            'p_form' : p_form}
+    return render(request, 'users/edit_profile.html', args)
