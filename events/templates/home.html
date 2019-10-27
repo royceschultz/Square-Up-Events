@@ -1,5 +1,18 @@
 {% extends 'base.html'%}
+{% load crispy_forms_tags %}
   {%block content%}
+    <h1>Search</h1>
+      <form class="" action="{% url 'home'%}" method="post">
+        {% csrf_token %}
+        <fieldset>
+          <legend>Log In</legend>
+          {{ form|crispy }}
+        </fieldset>
+        <div class="form-group">
+          <button class="btn btn-outline-dark">Search</button>
+        </div>
+      </form>
+    <h1>Events</h1>
     {%for event in events%}
       <div class="card my-3">
         <div class="card-header">
@@ -14,7 +27,7 @@
 
           {% if event.author.id == user.id %}
             <a class="btn btn-primary" href="{%url 'event edit' event.id%}">Edit</a>
-          
+
           {% endif %}
         </div>
         <div class="card-body text-nowrap">

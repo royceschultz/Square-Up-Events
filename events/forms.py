@@ -12,3 +12,7 @@ class EventForm(forms.ModelForm):
         widgets = {
             'event_date': forms.Textarea(attrs={'cols': 80, 'rows': 3}), # TODO: replace with datetime widget
         }
+
+class SearchForm(forms.Form):
+    search = forms.CharField(label='search',max_length=100, required=False)
+    show_old = forms.BooleanField(label='show old events', required=False)

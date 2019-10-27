@@ -3,13 +3,32 @@ from django.http import HttpResponse
 from django.http import Http404
 from django.contrib import messages
 from django.shortcuts import redirect
+from django.db.models import Q
 
 from .models import Event
-from .forms import EventForm
+from .forms import EventForm, SearchForm
+
+from datetime import datetime
 
 def home(request):
-    events = Event.objects.all().order_by('-event_date')
-    return render(request, 'home.html',{'events':events})
+    show_old = False
+    if request.method == 'POST':
+        form = SearchForm(request.POST)
+        if form.is_valid():
+            search = form.cleaned_data.get('search')
+            show_old = form.cleaned_data.get('show_old')
+            events = Event.objects.filter(Q(name__icontains=search)|Q(details__icontains=search))
+        else:
+            messages.warning(request,'Something went wrong!')
+            events = Event.objects.all()
+            # then call to render below
+    else:
+        events = Event.objects.all()
+        form = SearchForm()
+    if not show_old:
+        events = events.filter(event_date__gt=datetime.now())
+    events = events.order_by('event_date')
+    return render(request, 'home.html',{'events':events, 'form':form})
 
 def event_detail(request, id):
     try:
