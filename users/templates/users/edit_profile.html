@@ -4,13 +4,20 @@
 {% block content %}
 <br>
   <div class = 'container'>
-    <form method = 'post'>
+    <form method = "POST" enctype = "multipart/form-data">
       {% csrf_token %}
-    {{ form | crispy }}
-    </br>
-    </div>
-      <button type = 'submit' class = 'btn-outline-secondary'> Submit </button>
+      <div class="form-group">
+        <legend class="border-bottom mb-4">Edit Profile</legend>
+        {{ u_form | crispy }}
+        {{ p_form }}
+      </div>
+      <br>
+      <div class="form-group">
+        <button type = 'submit' class = 'btn btn-outline-secondary'> Submit </button>
+      </div>
+
     </form>
+  </div>
 
 
 {% endblock content%}
