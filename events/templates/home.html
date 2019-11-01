@@ -5,7 +5,6 @@
       <form class="" action="{% url 'home'%}" method="post">
         {% csrf_token %}
         <fieldset>
-          <legend>Log In</legend>
           {{ form|crispy }}
         </fieldset>
         <div class="form-group">

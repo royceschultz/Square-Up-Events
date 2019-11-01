@@ -50,3 +50,6 @@ def edit_profile(request):
     args = {'u_form' : u_form,
             'p_form' : p_form}
     return render(request, 'users/edit_profile.html', args)
+
+def about(request):
+    return render(request, 'about.html')
