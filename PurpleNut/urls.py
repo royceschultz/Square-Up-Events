@@ -29,16 +29,16 @@ urlpatterns = [
     url(r'^$',event_views.home, name='home'), # List events
     url(r'^event/(\d+)/', event_views.event_detail, name='event detail'),
     url(r'^event/create/', event_views.create_event, name='create event'),
+    url(r'^event_edit/(\d+)', event_views.edit_event, name='event edit'),
+
     url(r'^register/',user_views.register,name='register'),
     url(r'^login/',auth_views.LoginView.as_view(template_name='users/login.html') ,name='login'),
     url(r'^logout/',auth_views.LogoutView.as_view(template_name='users/logout.html') ,name='logout'),
 
-    
-    url(r'^event_edit/(\d+)', event_views.edit_event, name='event edit'),
-
-
     url(r'^profile/(\d+)/',user_views.profile,name='profile'),
-    url('^profile/edit/', user_views.edit_profile, name = 'edit profile')
+    url(r'^profile/edit/', user_views.edit_profile, name = 'edit profile'),
+
+    url(r'^about/$', user_views.about, name='about'),
 
 ]
 
