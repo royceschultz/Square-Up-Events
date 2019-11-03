@@ -14,13 +14,26 @@
   <div class="text-center">
     <div class="">
       <img src="{{ userProfile.profile.image.url }}" class="rounded-circle account-image" height="">
-      <div class="  ">
+      <div>
         <br>
         <h2 class="account-heading">{{ userProfile.username }}</h2>
         <p class="text-secondary">{{ userProfile.email }}</p>
       </div>
+
+      <table class="table table-hover">
+        <th>Signed Up Events</th>
+        {% for event in user.signed_up.all %}
+          <tr>
+            <td>
+                <a href="{% url 'event detail' event.id %}">
+                  {{ event.name }}
+                </a>
+            </td>
+          </tr>
+        {% endfor %}
+      </table>
+
     </div>
-    <!-- FORM HERE -->
   </div>
 
 {% endblock content%}

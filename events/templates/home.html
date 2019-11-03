@@ -26,7 +26,12 @@
 
           {% if event.author.id == user.id %}
             <a class="btn btn-primary" href="{%url 'event edit' event.id%}">Edit</a>
+          {% endif %}
 
+          {% if user not in event.signed_up.all %}
+            <a class="btn btn-secondary" href="{% url 'event signup' event.id %}">Signup</a>
+          {% else %}
+            <a class="btn btn-danger" href="{% url 'event cancel signup'  event.id %}">Cancel</a>
           {% endif %}
         </div>
         <div class="card-body text-nowrap">
@@ -34,13 +39,27 @@
           <p class="card-text">{{event.details}}</p>
           <p class="card-text">Time: {{event.event_date}}</p>
 
+          {% with signed_up=event.signed_up.all %}
+            <p>Number signed up: {{ signed_up.count }}</p>
+            <table class="table table-hover">
+              {% for atendee in signed_up %}
+                <tr>
+                  <td>
+                    <a href="{% url 'profile' atendee.id %}">
+                      {{atendee.username}}
+                    </a>
+                  </td>
+                </tr>
+
+              {% endfor %}
+            </table>
+          {% endwith %}
+          <br>
+
+
           <p class="card-text text-muted d-inline">Created: {{event.create_date}}</p>
           <p class="card-text text-muted d-inline">Last Modified: {{event.last_modified}}</p>
         </div>
-
-      </div>
-      <div class="">
-
       </div>
     {%endfor%}
   {% endblock content%}

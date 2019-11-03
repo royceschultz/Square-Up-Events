@@ -10,7 +10,9 @@ class Event(models.Model):
     location = models.TextField()
     event_date = models.DateTimeField()
 
-    author = models.ForeignKey(User, on_delete=models.CASCADE)
+    author = models.ForeignKey(User, on_delete=models.CASCADE, related_name='author')
+    signed_up = models.ManyToManyField(User, related_name='signed_up')
+
     create_date = models.DateTimeField(auto_now_add=True)
     last_modified = models.DateTimeField(auto_now=True)
 
