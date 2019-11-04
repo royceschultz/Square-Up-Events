@@ -1,38 +1,43 @@
 {% extends 'base.html'%}
+{% load static %}
 {% load crispy_forms_tags %}
   {%block content%}
-    <h1>Search</h1>
-      <form class="" action="{% url 'home'%}" method="post">
-        {% csrf_token %}
-        <fieldset>
-          {{ form|crispy }}
-        </fieldset>
-        <div class="form-group">
-          <button class="btn btn-outline-dark">Search</button>
-        </div>
-      </form>
-    <h1>Events</h1>
+    <h1 class="">Events</h1>
+    <form class="d-inline" action="{% url 'home'%}" method="post">
+      {% csrf_token %}
+      <fieldset>
+        {{ form|crispy }}
+      </fieldset>
+      <div class="form-group">
+        <button class="btn btn-outline-dark">Search</button>
+      </div>
+    </form>
     {%for event in events%}
       <div class="card my-3">
         <div class="card-header">
           <h2 class="d-inline">
-            <a href="{% url 'event detail' event.id %}"> {{event.name|capfirst}} </a>
+            <a href="{% url 'event detail' event.id %}">{{event.name|capfirst}}</a>
           </h2>
-          <h4 class="d-inline">by
-            <a href="{% url 'profile' event.author.id %}">{{event.author}}</a>
-            <img src="{{ event.author.profile.image.url }}" class="rounded-circle" height="40px" alt="">
-          </h4>
-          <h3>{{event.category}}</h3>
 
           {% if event.author.id == user.id %}
-            <a class="btn btn-primary" href="{%url 'event edit' event.id%}">Edit</a>
+            <a class="btn btn-outline-dark float-right" href="{%url 'event edit' event.id%}">Edit</a>
 
           {% endif %}
+          <div class="">
+            <h3 class="mute d-inline">{{event.category}}</h3>
+            <h6 class="float-right inline"> posted by:
+              <a href="{% url 'profile' event.author.id %}"><img src="{{ event.author.profile.image.url }}" class="rounded-circle" height="40px" alt=""><span class="ml-1">{{event.author}}</span></a>
+            </h6>
+          </div>
+
+
         </div>
         <div class="card-body text-nowrap">
-          <p class="card-text">Location: {{event.location}}</p>
-          <p class="card-text">{{event.details}}</p>
-          <p class="card-text">Time: {{event.event_date}}</p>
+
+          <p class="card-text"><img src="{% static "events/location.png" %}" class="float-left" height="27px" alt=""><span class="ml-3">{{event.location}}</span></p>
+          <p class="card-text"><img src="{% static "events/time.png" %}" class="float-left" height = "27px" alt=""> <span class="ml-3">{{event.event_date}}</span></p>
+          <p class="card-text container border-gray border">{{event.details}}</p>
+
 
           <p class="card-text text-muted d-inline">Created: {{event.create_date}}</p>
           <p class="card-text text-muted d-inline">Last Modified: {{event.last_modified}}</p>
