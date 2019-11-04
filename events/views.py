@@ -47,8 +47,9 @@ def create_event(request):
         filled_form = EventForm(request.POST)
         if filled_form.is_valid():
             filled_form.instance.author = request.user # fill in author with current user
-            filled_form.instance.signed_up.add(request.user)
             filled_form.save()
+            filled_form.instance.signed_up.add(request.user)
+
             eventName = filled_form.cleaned_data.get('name')
             messages.success(request,f'{eventName} has been created!')
             return redirect('home')
@@ -90,6 +91,7 @@ def signup(request, event_id):
     messages.success(request,f'Signed up for { event.name }')
     return redirect('home')
 
+@login_required
 def cancel_signup(request, event_id):
     try:
         event = Event.objects.get(id=event_id)
