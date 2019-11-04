@@ -15,10 +15,12 @@
       <a class="btn btn-primary" href="{%url 'event edit' event.id%}">Edit</a>
     {% endif %}
 
-    {% if user not in event.signed_up.all %}
-      <a class="btn btn-secondary" href="{% url 'event signup' event.id %}">Signup</a>
-    {% else %}
-      <a class="btn btn-danger" href="{% url 'event cancel signup'  event.id %}">Cancel</a>
+    {% if not event.is_past %}
+      {% if user not in event.signed_up.all %}
+        <a class="btn btn-secondary" href="{% url 'event signup' event.id %}">Signup</a>
+      {% else %}
+        <a class="btn btn-danger" href="{% url 'event cancel signup'  event.id %}">Cancel</a>
+      {% endif %}
     {% endif %}
   </div>
   <div class="card-body text-nowrap">
