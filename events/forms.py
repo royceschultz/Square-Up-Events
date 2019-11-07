@@ -5,7 +5,7 @@ from .models import Event
 class EventForm(forms.ModelForm):
     class Meta:
         model = Event
-        exclude = ['author'] # author will be determined by request.user
+        exclude = ['author','signed_up'] # author will be determined by request.user
         labels = {
             'event_date': 'Date and time of event (format: MM/DD/YYYY 24H:MM)'
         }

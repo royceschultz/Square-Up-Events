@@ -4,10 +4,25 @@
 <div class="card my-3">
   <div class="card-header">
     <h2 class="d-inline">
-      <a href="{%url 'event detail' event.id%}"> {{event.name|capfirst}} </a>
+      <a href="{% url 'event detail' event.id %}"> {{event.name|capfirst}} </a>
     </h2>
+
+    <h4 class="d-inline">by
+      <a href="{% url 'profile' event.author.id %}">{{event.author}}</a>
+      <img src="{{ event.author.profile.image.url }}" class="rounded-circle" height="40px" alt="">
+    </h4>
+    <h3>{{event.category}}</h3>
+
     {% if event.author.id == user.id %}
-      <a class="btn btn-outline-dark float-right" href="{%url 'event edit' event.id%}">Edit</a>
+      <a class="btn btn-primary" href="{%url 'event edit' event.id%}">Edit</a>
+    {% endif %}
+
+    {% if not event.is_past %}
+      {% if user not in event.signed_up.all %}
+        <a class="btn btn-secondary" href="{% url 'event signup' event.id %}">Signup</a>
+      {% else %}
+        <a class="btn btn-danger" href="{% url 'event cancel signup'  event.id %}">Cancel</a>
+      {% endif %}
 
     {% endif %}
     <div class="">
@@ -26,12 +41,26 @@
     <p class="card-text container border-gray border">{{event.details}}</p>
 
 
+    {% with signed_up=event.signed_up.all %}
+      <p>Number signed up: {{ signed_up.count }}</p>
+      <table class="table table-hover">
+        {% for atendee in signed_up %}
+          <tr>
+            <td>
+              <a href="{% url 'profile' atendee.id %}">
+                {{atendee.username}}
+              </a>
+            </td>
+          </tr>
+
+        {% endfor %}
+      </table>
+    {% endwith %}
+    <br>
+
+
     <p class="card-text text-muted d-inline">Created: {{event.create_date}}</p>
     <p class="card-text text-muted d-inline">Last Modified: {{event.last_modified}}</p>
   </div>
-
-</div>
-<div class="">
-
 </div>
 {%endblock content%}

@@ -4,6 +4,7 @@ from django.http import Http404
 from django.contrib import messages
 from django.shortcuts import redirect
 from django.db.models import Q
+from django.contrib.auth.decorators import login_required
 
 from .models import Event
 from .forms import EventForm, SearchForm
@@ -47,6 +48,8 @@ def create_event(request):
         if filled_form.is_valid():
             filled_form.instance.author = request.user # fill in author with current user
             filled_form.save()
+            filled_form.instance.signed_up.add(request.user)
+
             eventName = filled_form.cleaned_data.get('name')
             messages.success(request,f'{eventName} has been created!')
             return redirect('home')
@@ -56,7 +59,6 @@ def create_event(request):
     else: # If logged in user is accessing the page through a normal GET request
         form = EventForm()
         return render(request, 'create_event.html',{'form':form})
-
 
 def edit_event(request, id):
 
@@ -77,3 +79,25 @@ def edit_event(request, id):
             return render(request, 'create_event.html', {'form' : form})
 
     return render(request, 'create_event.html', {'form': form})
+
+@login_required
+def signup(request, event_id):
+    try:
+        event = Event.objects.get(id=event_id)
+    except Event.DoesNotExist:
+        raise Http404('Event does\'t exist')
+    event.signed_up.add(request.user)
+    event.save()
+    messages.success(request,f'Signed up for { event.name }')
+    return redirect('home')
+
+@login_required
+def cancel_signup(request, event_id):
+    try:
+        event = Event.objects.get(id=event_id)
+    except Event.DoesNotExist:
+        raise Http404('Event does\'t exist')
+    event.signed_up.remove(request.user)
+    event.save()
+    messages.success(request,f'Canceled on { event.name }')
+    return redirect('home')
