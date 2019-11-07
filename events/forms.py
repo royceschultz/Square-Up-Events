@@ -14,5 +14,5 @@ class EventForm(forms.ModelForm):
         }
 
 class SearchForm(forms.Form):
-    search = forms.CharField(label='search',max_length=100, required=False)
+    search = forms.CharField(label='',widget=forms.TextInput(attrs={'placeholder': 'search for events'}),max_length=100, required=False)
     show_old = forms.BooleanField(label='show old events', required=False)
