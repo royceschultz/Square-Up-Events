@@ -1,66 +1,126 @@
 {%extends 'base.html'%}
+{% load crispy_forms_tags %}
 {% load static %}
 {%block content%}
-<div class="card my-3">
-  <div class="card-header">
-    <h2 class="d-inline">
-      <a href="{% url 'event detail' event.id %}"> {{event.name|capfirst}} </a>
-    </h2>
+<form method="post">
+  {% csrf_token %}
+  <input type="submit" value="Submit">
 
-    <h4 class="d-inline">by
-      <a href="{% url 'profile' event.author.id %}">{{event.author}}</a>
-      <img src="{{ event.author.profile.image.url }}" class="rounded-circle" height="40px" alt="">
-    </h4>
-    <h3>{{event.category}}</h3>
+  <div class="card my-3">
+    <div class="card-header">
+      <h2 class="d-inline">
+        <!-- Name of Event  -->
+        <a href="{% url 'event detail' event.id %}" class='collapse show' id='namefield'> {{event.name|capfirst}} </a>
+        <div class="collapse" id='namefield'>
+          {{ form.name|as_crispy_field }}
+        </div>
+        <!-- Edit Name Button -->
+        <button type='button' class="btn btn-outline-secondary" data-toggle='collapse' data-target='#namefield'>
+          Edit Name
+        </button>
 
-    {% if event.author.id == user.id %}
-      <a class="btn btn-primary" href="{%url 'event edit' event.id%}">Edit</a>
-    {% endif %}
-
-    {% if not event.is_past %}
-      {% if user not in event.signed_up.all %}
-        <a class="btn btn-secondary" href="{% url 'event signup' event.id %}">Signup</a>
-      {% else %}
-        <a class="btn btn-danger" href="{% url 'event cancel signup'  event.id %}">Cancel</a>
+      <!-- Sign Up Button -->
+      {% if not event.is_past %}
+        {% if user not in event.signed_up.all %}
+          <a class="btn btn-secondary" href="{% url 'event signup' event.id %}">Sign up</a>
+        {% else %}
+          <a class="btn btn-danger" href="{% url 'event cancel signup'  event.id %}">Cancel Sign up</a>
+        {% endif %}
       {% endif %}
-
-    {% endif %}
-    <div class="">
-      <h3 class="mute d-inline">{{event.category}}</h3>
-      <h6 class="float-right inline"> posted by:
-        <a href="{% url 'profile' event.author.id %}"><img src="{{ event.author.profile.image.url }}" class="rounded-circle" height="40px" alt=""><span class="ml-1">{{event.author}}</span></a>
-      </h6>
+      <!-- Event Category -->
+      <div class="">
+        <div class="collapse show " id='catfield'>
+          <h3 class="mute d-inline">{{event.category}}</h3>
+        </div>
+        <div class="collapse" id='catfield'>
+          {{ form.category|as_crispy_field }}
+        </div>
+        <!-- Edit Category Button -->
+        <button type='button' class="btn btn-outline-secondary" data-toggle='collapse' data-target='#catfield'>
+          Edit Category
+        </button>
+        <!-- Author -->
+        <h6 class="float-right inline"> posted by:
+          <a href="{% url 'profile' event.author.id %}"><img src="{{ event.author.profile.image.url }}" class="rounded-circle" height="40px" alt=""><span class="ml-1">{{event.author}}</span></a>
+        </h6>
+      </div>
     </div>
+    <!-- Event Body -->
+    <div class="card-body text-nowrap">
+      <!-- Location -->
+      <div class="card-text">
+        <img src="{% static 'events/location.png' %}" class="float-left" height="27px" alt="">
+        <span class="ml-3 collapse show" id='locfield'>
+          {{event.location}}
+        </span>
+        <div class="collapse" id='locfield'>
+          {{ form.location|as_crispy_field }}
+        </div>
+        <!-- Edit Location Button -->
+        <button type='button' class="btn btn-outline-secondary float-right" data-toggle='collapse' data-target='#locfield'>
+          Edit Location
+        </button>
+      </div><br>
 
+      <!-- DateTime -->
+      <div class="card-text">
+        <img src="{% static "events/time.png" %}" class="float-left" height = "27px" alt="">
+        <span class="ml-3 collapse show" id='timefield'>
+          {{event.event_date}}
+        </span>
+        <div class="collapse" id='timefield'>
+          {{ form.event_date|as_crispy_field }}
+        </div>
+        <!-- Edit DateTime Button -->
+        <button type='button' class="btn btn-outline-secondary float-right" data-toggle='collapse' data-target='#timefield'>
+          Edit Time
+        </button>
+      </div><br>
 
+      <!-- Details -->
+      <div class="">
+        <span>Details</span>
+        <!-- Edit Details Button -->
+        <button type='button' class="btn btn-outline-secondary float-right" data-toggle='collapse' data-target='#detailsfield'>
+          Edit Details
+        </button>
+      </div><br>
+      <div class="card-text container border-gray border">
+        <span class="ml-3 collapse show" id='detailsfield'>
+          {{ event.details }}
+        </span>
+        <div class="collapse" id='detailsfield'>
+          {{ form.details|as_crispy_field }}
+        </div>
+      </div><br>
+
+      <!-- Attendees -->
+      {% with signed_up=event.signed_up.all %}
+        <p>Number signed up: {{ signed_up.count }}</p>
+        <table class="table table-hover">
+          <!-- TODO: Ugly table, replace with modal -->
+          {% for atendee in signed_up %}
+            <tr>
+              <td>
+                <a href="{% url 'profile' atendee.id %}">
+                  {{atendee.username}}
+                </a>
+              </td>
+            </tr>
+          {% endfor %}
+        </table>
+      {% endwith %}
+      <br>
+      <p class="card-text text-muted d-inline">Created: {{event.create_date}}</p>
+      <p class="card-text text-muted d-inline">Last Modified: {{event.last_modified}}</p>
+    </div>
   </div>
-  <div class="card-body text-nowrap">
+</form>
 
-    <p class="card-text"><img src="{% static "events/location.png" %}" class="float-left" height="27px" alt=""><span class="ml-3">{{event.location}}</span></p>
-    <p class="card-text"><img src="{% static "events/time.png" %}" class="float-left" height = "27px" alt=""> <span class="ml-3">{{event.event_date}}</span></p>
-    <p class="card-text container border-gray border">{{event.details}}</p>
-
-
-    {% with signed_up=event.signed_up.all %}
-      <p>Number signed up: {{ signed_up.count }}</p>
-      <table class="table table-hover">
-        {% for atendee in signed_up %}
-          <tr>
-            <td>
-              <a href="{% url 'profile' atendee.id %}">
-                {{atendee.username}}
-              </a>
-            </td>
-          </tr>
-
-        {% endfor %}
-      </table>
-    {% endwith %}
-    <br>
-
-
-    <p class="card-text text-muted d-inline">Created: {{event.create_date}}</p>
-    <p class="card-text text-muted d-inline">Last Modified: {{event.last_modified}}</p>
-  </div>
-</div>
 {%endblock content%}
+
+{% block script %}
+function hide(name){
+  console.log('here')
+}
+{% endblock script%}

@@ -36,7 +36,37 @@ def event_detail(request, id):
         event = Event.objects.get(id=id)
     except Event.DoesNotExist:
         raise Http404('Event does\'t exist')
-    return render(request, 'event_detail.html',{'event':event})
+    form = EventForm(instance=event)
+    if request.method == 'POST':
+        form = EventForm(request.POST, instance=event)
+        if form.is_valid():
+            form.save()
+            messages.success(request,f'Changes have been made to your event')
+            return redirect('event detail',id)
+        else:
+            messages.warning(request,'Something is wrong with your form')
+            return render(request, 'event_detail.html', {'event':event, 'form':form})
+    return render(request, 'event_detail.html',{'event':event, 'form':form})
+
+def edit_event(request, id):
+
+    try:
+        event = Event.objects.get(id=id)
+
+    except Event.DoesNotExist:
+        raise Http404('Event does\'t exist')
+    form =EventForm( instance =event)
+    if request.method == 'POST':
+        form = EventForm( request.POST, instance =event)
+        if form.is_valid():
+            form.save()
+            messages.success(request,f'Changes have been made to your event')
+            return redirect('event detail',id)
+        else:
+            messages.warning(request,'Something is wrong with your form')
+            return render(request, 'create_event.html', {'form' : form})
+
+    return render(request, 'create_event.html', {'form': form})
 
 def create_event(request):
     if not request.user.is_authenticated: # if user is not logged in
