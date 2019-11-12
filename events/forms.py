@@ -1,6 +1,6 @@
 from django import forms
 from .models import Event
-
+from .widgets import BootstrapDateTimePickerInput
 
 class EventForm(forms.ModelForm):
     class Meta:
@@ -10,7 +10,7 @@ class EventForm(forms.ModelForm):
             'event_date': 'Date and time of event (format: MM/DD/YYYY 24H:MM)'
         }
         widgets = {
-            'event_date': forms.Textarea(attrs={'cols': 80, 'rows': 3}), # TODO: replace with datetime widget
+            'event_date': BootstrapDateTimePickerInput()
         }
 
 class SearchForm(forms.Form):
