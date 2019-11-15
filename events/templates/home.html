@@ -51,15 +51,15 @@
           {% with signed_up=event.signed_up.all %}
             <p>Number signed up: {{ signed_up.count }}</p>
             <table class="table table-hover">
+              <button type="button" class="btn btn-info" data-toggle="collapse" data-target="#demo">List of Users Going</button>
               {% for atendee in signed_up %}
-                <tr>
-                  <td>
-                    <a href="{% url 'profile' atendee.id %}">
-                      {{atendee.username}}
-                    </a>
-                  </td>
-                </tr>
-
+              <div id="demo" class="collapse">
+                <div>
+                  <ul class="list-group">
+                    <a href="{% url 'profile' atendee.id %}"><img src="{{ atendee.profile.image.url }}" class="rounded-circle" height="40px" alt=""><span class="ml-1">{{atendee.username}}</span></a>
+                  </ul>
+                </div>
+              </div>
               {% endfor %}
             </table>
           {% endwith %}
