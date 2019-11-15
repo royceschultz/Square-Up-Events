@@ -39,6 +39,7 @@ def event_detail(request, id):
     return render(request, 'event_detail.html',{'event':event})
 
 def create_event(request):
+
     if not request.user.is_authenticated: # if user is not logged in
         # Unlike the @login_required decorator, this displays a friendly error message
         messages.warning(request,'You must be logged in to create an event')
@@ -60,25 +61,34 @@ def create_event(request):
         form = EventForm()
         return render(request, 'create_event.html',{'form':form})
 
+@login_required
 def edit_event(request, id):
+
 
     try:
         event = Event.objects.get(id=id)
 
     except Event.DoesNotExist:
         raise Http404('Event does\'t exist')
-    form =EventForm( instance =event)
-    if request.method == 'POST':
-        form = EventForm( request.POST, instance =event)
-        if form.is_valid():
-            form.save()
-            messages.success(request,f'Changes have been made to your event')
-            return redirect('event detail',id)
-        else:
-            messages.warning(request,'Something is wrong with your form')
-            return render(request, 'create_event.html', {'form' : form})
 
-    return render(request, 'create_event.html', {'form': form})
+    if(event.author == request.user):
+        form =EventForm( instance =event)
+        if request.method == 'POST':
+            form = EventForm( request.POST, instance =event)
+            if form.is_valid():
+                form.save()
+                messages.success(request,f'Changes have been made to your event')
+                return redirect('event detail',id)
+            else:
+                messages.warning(request,'Something is wrong with your form')
+                return render(request, 'create_event.html', {'form' : form})
+                
+        return render(request, 'create_event.html', {'form': form})
+    else:
+        messages.warning(request,'You do not have permission to edit this')
+        return redirect('home')
+
+
 
 @login_required
 def signup(request, event_id):
