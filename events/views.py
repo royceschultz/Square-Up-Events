@@ -13,17 +13,13 @@ from datetime import datetime
 
 def home(request):
     events = Event.objects.all()
-    form = SearchForm()
+    form = SearchForm(request.GET)
     search = request.GET.get('search')
     if search:
-        print(search)
         events = events.filter(Q(name__icontains=search)|Q(details__icontains=search))
-        form.fields['search'].initial = search
     show_old = request.GET.get('show_old')
     if not show_old:
         events = events.filter(event_date__gt=datetime.now())
-    else:
-        form.fields['show_old'].initial = True
     events = events.order_by('event_date')
     return render(request, 'home.html',{'events':events, 'form':form})
 
