@@ -70,7 +70,7 @@ def edit_profile(request):
             return redirect('profile', request.user.id)
         else:
             messages.warning(request,'Something is wrong with your form')
-            #return render(request, 'users/edit_profile.html', {'form' : form})
+            # return render(request, 'users/edit_profile.html', {'form' : form})
 
     else:
         u_form = EditProfileForm(instance = request.user)
@@ -78,6 +78,22 @@ def edit_profile(request):
     args = {'u_form' : u_form,
             'p_form' : p_form}
     return render(request, 'users/edit_profile.html', args)
+
+def followUser(request):
+    if request.method == 'POST':
+        print('post')
+        followUserId = request.POST.get('id')
+        try:
+            user = User.objects.get(id=request.user.id)
+            followUser = User.objects.get(id=followUserId)
+            user.profile.following.add(user)
+            user.save()
+            messages.success(request,'followed {{followUser.username}}')
+        except User.DoesNotExist:
+            raise Http404('Could not find user')
+        return redirect('profile', followUserId)
+    return redirect('profile', request.user.id)
+
 
 def about(request):
     return render(request, 'about.html')

@@ -2,12 +2,13 @@
 {% load crispy_forms_tags %}
 
 {% block content %}
-</br>
 
 {% if userProfile.id == user.id %}
   <div class = 'text-right'>
     <a href = "{% url 'edit profile' %}" class="btn btn-outline-secondary">Edit Profile</a>
   </div>
+{% else %}
+  {% include "followForm.html" with user=userProfile %}
 {% endif %}
 
 <br>
@@ -19,20 +20,50 @@
         <h2 class="account-heading">{{ userProfile.username }}</h2>
         <p class="text-secondary">{{ userProfile.email }}</p>
       </div>
+      <div class="row">
+        <!-- Following -->
+        <div class="col">
+          <table class="table table-hover">
+            <th>Following {{userProfile.profile.following.count}} users</th>
+            {% for following in userProfile.profile.following.all %}
+              <tr>
+                <td>
+                  <a href="{% url 'profile' following.id %}">{{ following.username }}</a>
+                </td>
+              </tr>
+            {% endfor %}
+          </table>
+        </div>
+        <!-- Followers -->
+        <div class="col">
+          <table class="table table-hover">
+            <th>Followers</th>
+            {% for follower in userProfile.followers.all %}
+              <tr>
+                <td>
+                  <a href="{% url 'profile' follower.user.id %}">{{ follower.user.username }}</a>
+                </td>
+              </tr>
+            {% endfor %}
+          </table>
+        </div>
+        <!-- Signed Up Events -->
+        <div class="col">
+          <table class="table table-hover">
+            <th>Signed Up Events</th>
+            {% for event in userProfile.signed_up.all %}
+              <tr>
+                <td>
+                    <a href="{% url 'event detail' event.id %}">
+                      {{ event.name }}
+                    </a>
+                </td>
+              </tr>
+            {% endfor %}
+          </table>
+        </div>
 
-      <table class="table table-hover">
-        <th>Signed Up Events</th>
-        {% for event in user.signed_up.all %}
-          <tr>
-            <td>
-                <a href="{% url 'event detail' event.id %}">
-                  {{ event.name }}
-                </a>
-            </td>
-          </tr>
-        {% endfor %}
-      </table>
-
+      </div>
     </div>
   </div>
 
