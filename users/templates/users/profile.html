@@ -8,7 +8,11 @@
     <a href = "{% url 'edit profile' %}" class="btn btn-outline-secondary">Edit Profile</a>
   </div>
 {% else %}
-  {% include "followForm.html" with user=userProfile %}
+  {% if userProfile in user.profile.following.all %}
+    {% include "followForm.html" with user=userProfile unfollow=True %}
+  {% else %}
+    {% include "followForm.html" with user=userProfile %}
+  {% endif %}
 {% endif %}
 
 <br>
@@ -37,7 +41,7 @@
         <!-- Followers -->
         <div class="col">
           <table class="table table-hover">
-            <th>Followers</th>
+            <th>{{ userProfile.followers.count }} Followers</th>
             {% for follower in userProfile.followers.all %}
               <tr>
                 <td>

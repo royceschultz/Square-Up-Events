@@ -82,13 +82,20 @@ def edit_profile(request):
 def followUser(request):
     if request.method == 'POST':
         print('post')
+        print(request.POST)
         followUserId = request.POST.get('id')
+        unfollow = request.POST.get('unfollow')
         try:
             user = User.objects.get(id=request.user.id)
             followUser = User.objects.get(id=followUserId)
-            user.profile.following.add(user)
+            if unfollow:
+                user.profile.following.remove(followUser)
+                message = 'unfollowed {{followUser.username}}'
+            else:
+                user.profile.following.add(followUser)
+                message = 'followed {{followUser.username}}'
             user.save()
-            messages.success(request,'followed {{followUser.username}}')
+            messages.success(request,message)
         except User.DoesNotExist:
             raise Http404('Could not find user')
         return redirect('profile', followUserId)
