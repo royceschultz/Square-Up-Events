@@ -1,0 +1,62 @@
+{% load static %}
+<div class="card my-3">
+  <div class="card-header">
+    <!-- Event Name -->
+    <h2 class="d-inline">
+      <a href="{% url 'event detail' event.id %}"> {{event.name|capfirst}} </a>
+    </h2>
+    <!-- Edit Event Button -->
+    {% if event.author.id == user.id %}
+      <a class="btn btn-primary" href="{%url 'event edit' event.id%}">Edit</a>
+    {% endif %}
+    <!-- Sign up/Cancel Button -->
+    {% if not event.is_past %}
+      {% if user not in event.signed_up.all %}
+        <a class="btn btn-secondary" href="{% url 'event signup' event.id %}">Signup</a>
+      {% else %}
+        <a class="btn btn-danger" href="{% url 'event cancel signup'  event.id %}">Cancel</a>
+      {% endif %}
+    {% endif %}
+    <div>
+      <!-- Category -->
+      <h3 class="mute d-inline">{{event.category}}</h3>
+      <!-- Author -->
+      <h6 class="float-right inline"> posted by:
+        <a href="{% url 'profile' event.author.id %}"><img src="{{ event.author.profile.image.url }}" class="rounded-circle" height="40px" alt=""><span class="ml-1">{{event.author}}</span></a>
+      </h6>
+    </div>
+  </div>
+  <div class="card-body text-nowrap">
+    <!-- Location -->
+    <p class="card-text">
+      <img src="{% static "events/location.png" %}" class="float-left" height="27px" alt="">
+      <span class="ml-3">{{event.location}}</span>
+    </p>
+    <!-- Time -->
+    <p class="card-text">
+      <img src="{% static "events/time.png" %}" class="float-left" height = "27px" alt="">
+      <span class="ml-3">{{event.event_date}}</span>
+    </p>
+    <!-- Details -->
+    <p class="card-text container border-gray border">{{event.details}}</p>
+    <!-- Users Signed Up -->
+    {% with signed_up=event.signed_up.all %}
+      <p>Number signed up: {{ signed_up.count }}</p>
+      <table class="table table-hover">
+        {% for atendee in signed_up %}
+          <tr>
+            <td>
+              <a href="{% url 'profile' atendee.id %}">
+                {{atendee.username}}
+              </a>
+            </td>
+          </tr>
+        {% endfor %}
+      </table>
+    {% endwith %}
+    <br>
+    <!-- Misc. Info -->
+    <p class="card-text text-muted d-inline">Created: {{event.create_date}}</p>
+    <p class="card-text text-muted d-inline">Last Modified: {{event.last_modified}}</p>
+  </div>
+</div>
