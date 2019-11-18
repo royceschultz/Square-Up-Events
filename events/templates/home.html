@@ -11,7 +11,9 @@
         <button class="btn btn-outline-dark">Search</button>
       </div>
     </form>
+
     {%for event in events%}
       {% include 'event.html' with event=event %}
     {%endfor%}
+
   {% endblock content%}

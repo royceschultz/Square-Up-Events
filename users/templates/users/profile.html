@@ -20,9 +20,26 @@
         <p class="text-secondary">{{ userProfile.email }}</p>
       </div>
 
-      <table class="table table-hover">
-        <th>Signed Up Events</th>
-        {% for event in user.signed_up.all %}
+
+        <h3>Signed Up Events</h3>
+
+          <button type="button" class="btn btn-info" data-toggle="collapse" data-target="#demo">List of All Events </button>
+
+          {% for event in user.signed_up.all %}
+          <div id="demo" class="collapse">
+            <div>
+              <ul class="list-group">
+                <a href="{% url 'event detail' event.id %}">
+                  {{ event.name }}
+                </a>
+              </ul>
+            </div>
+          </div>
+          {% endfor %}
+
+
+
+        <!-- {% for event in user.signed_up.all %}
           <tr>
             <td>
                 <a href="{% url 'event detail' event.id %}">
@@ -30,8 +47,8 @@
                 </a>
             </td>
           </tr>
-        {% endfor %}
-      </table>
+        {% endfor %} -->
+
 
     </div>
   </div>
