@@ -1,0 +1,12 @@
+<div class="container">
+  <form action="{% url 'event signup' %}" method="POST">
+    {% csrf_token %}
+    <input type="hidden" name="id" value="{{ event.id }}">
+    {% if signed_up %}
+      <input type="hidden" name="signed_up" value="True">
+      <input type="submit" class="btn btn-danger" name="" value="Cancel Sign Up">
+    {% else %}
+      <input type="submit" class="btn btn-primary" name="" value="Sign Up">
+    {% endif %}
+  </form>
+</div>
