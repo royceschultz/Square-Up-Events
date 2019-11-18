@@ -2,8 +2,8 @@
 {% load crispy_forms_tags %}
   {%block content%}
     <h1 class="">Events</h1>
-    <form class="d-inline" action="{% url 'home'%}" method="post">
-      {% csrf_token %}
+    <form class="d-inline" action="{% url 'home'%}" method="get">
+      <!-- {% csrf_token %} -->
       <fieldset>
         {{ form|crispy }}
       </fieldset>

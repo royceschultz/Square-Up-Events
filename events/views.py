@@ -12,20 +12,12 @@ from .forms import EventForm, SearchForm
 from datetime import datetime
 
 def home(request):
-    show_old = False
-    if request.method == 'POST':
-        form = SearchForm(request.POST)
-        if form.is_valid():
-            search = form.cleaned_data.get('search')
-            show_old = form.cleaned_data.get('show_old')
-            events = Event.objects.filter(Q(name__icontains=search)|Q(details__icontains=search))
-        else:
-            messages.warning(request,'Something went wrong!')
-            events = Event.objects.all()
-            # then call to render below
-    else:
-        events = Event.objects.all()
-        form = SearchForm()
+    events = Event.objects.all()
+    form = SearchForm(request.GET)
+    search = request.GET.get('search')
+    if search:
+        events = events.filter(Q(name__icontains=search)|Q(details__icontains=search))
+    show_old = request.GET.get('show_old')
     if not show_old:
         events = events.filter(event_date__gt=datetime.now())
     events = events.order_by('event_date')
@@ -82,7 +74,7 @@ def edit_event(request, id):
             else:
                 messages.warning(request,'Something is wrong with your form')
                 return render(request, 'create_event.html', {'form' : form})
-                
+
         return render(request, 'create_event.html', {'form': form})
     else:
         messages.warning(request,'You do not have permission to edit this')
