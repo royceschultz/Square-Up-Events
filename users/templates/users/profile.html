@@ -30,7 +30,6 @@
       </button>
 
       <!-- Modal -->
-      <div class="overflow-auto">
         <div class="modal fade" id="exampleModalLong" tabindex="-1" role="dialog" aria-labelledby="exampleModalLongTitle" aria-hidden="true">
           <div class="modal-dialog" role="document">
             <div class="modal-content">
@@ -42,11 +41,13 @@
                 </button>
               </div>
 
-              <div class="modal-body">
+              <div class="overflow-auto" style='max-height:50vh'>
                 {% for event in user.signed_up.all %}
+                  <br>
                   <a href="{% url 'event detail' event.id %}">
                         {{ event.name }}
                   </a>
+                  <br>
                   <br>
                 {% endfor %}
               <div class="modal-footer">
@@ -57,7 +58,6 @@
             </div>
           </div>
         </div>
-      </div>
 
   </div>
 </div>

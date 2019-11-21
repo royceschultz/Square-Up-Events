@@ -50,7 +50,7 @@
         </button>
 
         <!-- Modal -->
-        <div class="overflow-auto">
+
           <div class="modal fade" id="exampleModalLong" tabindex="-1" role="dialog" aria-labelledby="exampleModalLongTitle" aria-hidden="true">
             <div class="modal-dialog" role="document">
               <div class="modal-content">
@@ -62,7 +62,7 @@
                   </button>
                 </div>
 
-                <div class="modal-body">
+                <div class="overflow-auto" style='max-height:50vh'>
 
                   {% for atendee in signed_up %}
                         <a href="{% url 'profile' atendee.id %}">
@@ -70,6 +70,7 @@
                           <span class="ml-1">{{atendee.username}}</span></a>
                           <br>
                   {% endfor %}
+
 
                 </div>
 
@@ -80,7 +81,6 @@
               </div>
             </div>
           </div>
-        </div >
     {% endwith %}
     <br>
     <!-- Misc. Info -->
