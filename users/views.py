@@ -90,10 +90,10 @@ def followUser(request):
             followUser = User.objects.get(id=followUserId)
             if unfollow:
                 user.profile.following.remove(followUser)
-                message = 'unfollowed {{followUser.username}}'
+                message = f'unfollowed {followUser.username}'
             else:
                 user.profile.following.add(followUser)
-                message = 'followed {{followUser.username}}'
+                message = f'followed {followUser.username}'
             user.save()
             messages.success(request,message)
         except User.DoesNotExist:
