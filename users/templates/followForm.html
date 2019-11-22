@@ -1,0 +1,15 @@
+<div class="container">
+  <form action="{% url 'follow user' %}" method="POST">
+    {% csrf_token %}
+    <input type="hidden" name="id" value="{{ user.id }}">
+    {% if unfollow %}
+      <input type="hidden" name="unfollow" value="true">
+      <div class="form-group">
+        <input type="submit" class="btn btn-danger" name="" value="unfollow">
+    {% else %}
+      <div class="form-group">
+        <input type="submit" class="btn btn-primary" name="" value="Follow">
+    {% endif %}
+    </div>
+  </form>
+</div>
