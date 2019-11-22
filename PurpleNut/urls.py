@@ -40,6 +40,7 @@ urlpatterns = [
     url(r'^profile/(\d+)/',user_views.profile,name='profile'),
     url(r'^profile/edit/', user_views.edit_profile, name = 'edit profile'),
     url(r'^profile/password', user_views.change_password, name = 'change password'),
+    url(r'^follow/', user_views.followUser, name='follow user'),
 
     url(r'^about/$', user_views.about, name='about'),
 
