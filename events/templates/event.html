@@ -1,4 +1,5 @@
 {% load static %}
+
 <div class="card my-3">
   <div class="card-header">
     <!-- Event Name -->
@@ -42,17 +43,44 @@
     <!-- Users Signed Up -->
     {% with signed_up=event.signed_up.all %}
       <p>Number signed up: {{ signed_up.count }}</p>
-      <table class="table table-hover">
-        {% for atendee in signed_up %}
-          <tr>
-            <td>
-              <a href="{% url 'profile' atendee.id %}">
-                {{atendee.username}}
-              </a>
-            </td>
-          </tr>
-        {% endfor %}
-      </table>
+
+        <!-- Button trigger modal -->
+        <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#modal_button{{event.id}}">
+          Users Attending
+        </button>
+
+        <!-- Modal -->
+
+          <div class="modal fade" id="modal_button{{event.id}}" tabindex="-1" role="dialog" aria-labelledby="exampleModalLongTitle" aria-hidden="true">
+            <div class="modal-dialog" role="document">
+              <div class="modal-content">
+
+                <div class="modal-header">
+                  <h5 class="modal-title" id="exampleModalLongTitle"> Users List </h5>
+                  <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                  </button>
+                </div>
+
+                <div class="overflow-auto" style='max-height:50vh'>
+
+                  {% for atendee in signed_up %}
+                        <a href="{% url 'profile' atendee.id %}">
+                          <img src="{{ atendee.profile.image.url }}" class="rounded-circle" height="40px" alt="">
+                          <span class="ml-1">{{atendee.username}}</span></a>
+                          <br>
+                  {% endfor %}
+
+
+                </div>
+
+                <div class="modal-footer">
+                  <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                </div>
+
+              </div>
+            </div>
+          </div>
     {% endwith %}
     <br>
     <!-- Misc. Info -->
