@@ -83,23 +83,20 @@ def edit_event(request, id):
 
 
 @login_required
-def signup(request, event_id):
-    try:
-        event = Event.objects.get(id=event_id)
-    except Event.DoesNotExist:
-        raise Http404('Event does\'t exist')
-    event.signed_up.add(request.user)
-    event.save()
-    messages.success(request,f'Signed up for { event.name }')
-    return redirect('home')
-
-@login_required
-def cancel_signup(request, event_id):
-    try:
-        event = Event.objects.get(id=event_id)
-    except Event.DoesNotExist:
-        raise Http404('Event does\'t exist')
-    event.signed_up.remove(request.user)
-    event.save()
-    messages.success(request,f'Canceled on { event.name }')
+def signup(request):
+    if request.method == 'POST':
+        id = request.POST.get('id')
+        try:
+            event = Event.objects.get(id=id)
+        except Event.DoesNotExist:
+            raise Http404('Event does\'t exist')
+        if request.POST.get('signed_up'):
+            event.signed_up.remove(request.user)
+            message = f'Canceled on {event.name}'
+        else:
+            event.signed_up.add(request.user)
+            message = f'Signed up for {event.name}'
+        event.save()
+        messages.success(request,message)
+        return redirect('home')
     return redirect('home')

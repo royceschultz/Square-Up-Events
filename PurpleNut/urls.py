@@ -30,8 +30,7 @@ urlpatterns = [
     url(r'^event/(\d+)/', event_views.event_detail, name='event detail'),
     url(r'^event/create/', event_views.create_event, name='create event'),
     url(r'^event_edit/(\d+)', event_views.edit_event, name='event edit'),
-    url(r'^event/signup/add/(\d+)', event_views.signup, name='event signup'),
-    url(r'^event/signup/rm/(\d+)', event_views.cancel_signup, name='event cancel signup'),
+    url(r'^event/signup/', event_views.signup, name='event signup'),
 
     url(r'^register/',user_views.register,name='register'),
     url(r'^login/',auth_views.LoginView.as_view(template_name='users/login.html') ,name='login'),
