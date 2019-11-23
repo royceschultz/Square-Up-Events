@@ -31,7 +31,7 @@ def home(request):
     elif sort_by == '3':
         events = events.order_by('event_date')
     elif sort_by == '4':
-        events = events.order_by('-event_date')
+        events = events.order_by('-create_date')
 
     return render(request, 'home.html',{'events':events,'sort_by':sort_by,'form':form})
 
