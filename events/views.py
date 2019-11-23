@@ -13,24 +13,24 @@ from datetime import datetime
 
 def home(request):
     events = Event.objects.all()
-    sort_by = request.GET.get('sort')
     form = SearchForm(request.GET)
-
     search = request.GET.get('search')
     if search:
         events = events.filter(Q(name__icontains=search)|Q(details__icontains=search))
     show_old = request.GET.get('show_old')
     if not show_old:
         events = events.filter(event_date__gt=datetime.now())
-
+    sort_by = request.GET.get('sort')
+    if sort_by is not None and sort_by != '':
+        sort_by = int(sort_by)
     events = events.order_by('event_date')
-    if sort_by == '1':
+    if sort_by == 1:
         events = events.annotate(count=Count('signed_up')).order_by('-count', 'event_date')
-    elif sort_by == '2':
+    elif sort_by == 2:
         events = events.annotate(count=Count('signed_up')).order_by('count', 'event_date')
-    elif sort_by == '3':
+    elif sort_by == 3:
         events = events.order_by('event_date')
-    elif sort_by == '4':
+    elif sort_by == 4:
         events = events.order_by('-create_date')
 
     return render(request, 'home.html',{'events':events,'sort_by':sort_by,'form':form})

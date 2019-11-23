@@ -21,4 +21,4 @@ class SearchForm(forms.Form):
                 ("3", "Upcoming"),
                 ("4", "Date Created"),
             ]
-    sort = forms.ChoiceField(choices=CHOICES, widget=forms.RadioSelect(attrs={'class':'form-input'}), label='Sort By', required=False)
+    sort = forms.ChoiceField(choices=CHOICES, widget=forms.RadioSelect(), label='Sort By', required=False)
