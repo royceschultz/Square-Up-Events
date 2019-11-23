@@ -8,13 +8,13 @@
       <fieldset>
         {{ form.search|as_crispy_field }}
         {{ form.show_old|as_crispy_field }}
+        {% include "widgets/sortOptions.html" %}
+
       </fieldset>
-      {% include "widgets/sortOptions.html" %}
       <div class="form-group">
         <button class="btn btn-outline-dark">Search</button>
       </div>
     </form>
-    <p> Trending Info: </p>
     {%for event in events%}
       {% include 'event.html' with event=event %}
     {%endfor%}
