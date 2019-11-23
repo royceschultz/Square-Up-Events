@@ -1,0 +1,33 @@
+<!-- Toggle style sort by buttons that keeps user choice after form submission -->
+<div class="form-group">
+  <label for="">Sort By:</label>
+  <div class="form-inline btn-group btn-group-toggle" data-toggle="buttons">
+      <label id="label1" for="id_sort_1" class="form-check-label btn btn-outline-primary {% if sort_by == '1' %}active{% endif %}">
+        <input type="radio" class="form-check-input" name="sort" id="id_sort_1" value="1">Most Signed Up
+      </label>
+
+      <label id="label2" for="id_sort_2" class="form-check-label btn btn-outline-primary {% if sort_by == '2' %}active{% endif %}">
+        <input type="radio" class="form-check-input" name="sort" id="id_sort_2" value="2">Least Signed Up
+      </label>
+
+      <label id="label3" for="id_sort_3" class="form-check-label btn btn-outline-primary {% if sort_by == '3' %}active{% endif %}">
+        <input type="radio" class="form-check-input" name="sort" id="id_sort_3" value="3">Newest-Oldest
+      </label>
+
+      <label id="label4" for="id_sort_4" class="form-check-label btn btn-outline-primary {% if sort_by == '4' %}active{% endif %}">
+        <input type="radio" class="form-check-input" name="sort" id="id_sort_4" value="4">Oldest-Newest
+      </label>
+
+      <label id="label5" for="id_sort_5" class="form-check-label btn btn-outline-primary {% if sort_by == '5' %}active{% endif %}">
+        <input type="radio" class="form-check-input" name="sort" id="id_sort_5" value="5">Trending
+      </label>
+
+  </div>
+</div>
+
+<!-- Javascript alternative in maintaining sort by choice -->
+<!-- <script type="text/javascript">
+  $(document).ready( function(){
+    document.getElementById("label" + {{sort_by}}).className += " active"
+  });
+</script> -->
