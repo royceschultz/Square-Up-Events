@@ -44,10 +44,10 @@
     <p class="card-text container border-gray border">{{event.details}}</p>
     <!-- Users Signed Up -->
     {% with signed_up=event.signed_up.all %}
-      <p>Number signed up: {{ signed_up.count }}</p>
+    <!--  <p>Number signed up: {{ signed_up.count }}</p> -->
 
         <!-- Button trigger modal -->
-        <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#modal_button{{event.id}}">
+        <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#modal_button{{event.id}}" >
           Users Attending
         </button>
 
@@ -59,6 +59,7 @@
 
                 <div class="modal-header">
                   <h5 class="modal-title" id="exampleModalLongTitle"> Users List </h5>
+                  <p class = "modal-dialog">Number signed up: {{ signed_up.count }} </p> 
                   <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                     <span aria-hidden="true">&times;</span>
                   </button>
