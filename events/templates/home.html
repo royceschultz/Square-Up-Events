@@ -8,12 +8,13 @@
       <fieldset>
         {{ form.search|as_crispy_field }}
         {{ form.show_old|as_crispy_field }}
-        {% include "widgets/sortOptions.html" %}
 
       </fieldset>
       <div class="form-group">
         <button class="btn btn-outline-dark">Search</button>
       </div>
+
+      {% include "widgets/sortOptions.html" %}
     </form>
     {%for event in events%}
       {% include 'event.html' with event=event %}
