@@ -5,7 +5,10 @@
     <form class="d-inline" action="{% url 'home'%}" method="get">
       <!-- {% csrf_token %} -->
       <fieldset>
-        {{ form|crispy }}
+        {{ form.search|as_crispy_field }}
+        {{ form.show_old|as_crispy_field }}
+        {% include "widgets/filterOptions.html" %}
+
       </fieldset>
       <div class="form-group">
         <button class="btn btn-outline-dark">Search</button>

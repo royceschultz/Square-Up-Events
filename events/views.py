@@ -21,6 +21,25 @@ def home(request):
     if not show_old:
         events = events.filter(event_date__gt=datetime.now())
     events = events.order_by('event_date')
+
+    #category holds which category filter
+    category = request.GET.getlist('category')
+    if category:
+        CATEG=[
+            'Basketball',
+            'Cycling',
+            'Hiking',
+            'Running',
+            'Soccer',
+            'Tennis',
+            'Other',
+            ]
+        filtered_events = Event.objects.none()
+        #filter for each category chosen
+        for i in CATEG:
+            if i in category:
+                filtered_events = filtered_events|events.filter(category = i)
+        events = filtered_events
     return render(request, 'home.html',{'events':events, 'form':form})
 
 def event_detail(request, id):
