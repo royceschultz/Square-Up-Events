@@ -47,16 +47,16 @@
 
         <!-- Button trigger modal -->
         <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#modal_button{{event.id}}" >
-          Users Attending
+        <!--  Users Attending -->
+          {{ signed_up.count }} Users Attending
         </button>
 
-        <p class = "modal-dialog">Number signed up: {{ signed_up.count }} </p>
         <!-- Modal -->
 
           <div class="modal fade" id="modal_button{{event.id}}" tabindex="-1" role="dialog" aria-labelledby="exampleModalLongTitle" aria-hidden="true">
             <div class="modal-dialog" role="document">
               <div class="modal-content">
-
+                <p class = "modal-dialog">Number signed up: {{ signed_up.count }} </p>
                 <div class="modal-header">
                   <h5 class="modal-title" id="exampleModalLongTitle"> Users List </h5>
                   <button type="button" class="close" data-dismiss="modal" aria-label="Close">
