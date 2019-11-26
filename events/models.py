@@ -15,7 +15,7 @@ class Event(models.Model):
         ('Tennis', 'Tennis'),
         ('Other', 'Other'),
     ]
-    category = models.CharField(max_length=100, choices=CATEG) # TODO: Implement choices set for category
+    category = models.CharField(max_length=100, choices=CATEG)
     details = models.TextField()
     location = models.TextField()
     event_date = models.DateTimeField()
