@@ -1,6 +1,7 @@
 {% extends 'base.html'%}
 {% load crispy_forms_tags %}
   {%block content%}
+
     <h1 class="">Events</h1>
     <form class="d-inline" action="{% url 'home'%}" method="get">
       <!-- {% csrf_token %} -->
@@ -13,8 +14,11 @@
       <div class="form-group">
         <button class="btn btn-outline-dark">Search</button>
       </div>
+
+      {% include "widgets/sortOptions.html" %}
     </form>
     {%for event in events%}
       {% include 'event.html' with event=event %}
     {%endfor%}
+
   {% endblock content%}
