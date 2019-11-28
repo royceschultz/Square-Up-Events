@@ -1,0 +1,31 @@
+
+html, body {
+    height: 100%;
+    margin-bottom: 0px;
+    padding-bottom:0px;
+  /*  overflow: hidden;*/
+}
+header {
+  height: 80px;
+}
+footer {
+  height: 50px;
+}
+.container {
+    height: calc(100% - 130px);
+    /*margin-bottom:-130px;*/
+    padding:0px;
+    overflow: auto;
+}
+/*
+.container::after {
+    content = "";
+    display: block;
+
+}
+
+footer{
+    height: 56px;
+    margin-top: 0px;
+}
+*/
