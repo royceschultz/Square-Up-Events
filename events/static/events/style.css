@@ -11,13 +11,17 @@ header {
 footer {
   height: 50px;
 }
+.cc1 {
+  height: calc(100% - 130px);
+  overflow:auto;
+}
+
 .ccc {
-    height: calc(100% - 130px);
     /*margin-bottom:-130px;*/
     padding:0px;
-    overflow: auto;
-    margin-left:50px;
-    margin-right: 50px;
+    /*overflow: auto;*/
+    margin-left:100px;
+    margin-right: 100px;
 }
 /*
 .container::after {

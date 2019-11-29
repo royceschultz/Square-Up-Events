@@ -49,19 +49,21 @@
       </div>
     </nav>
   </header>
-    <div class="ccc">
-      {% if messages %}
-        {% for message in messages %}
-          <div class="alert alert-{{ message.tags }}">
-            {{ message }}
-          </div>
-        {% endfor %}
-      {% endif %}
-      <br>
-      {% block content %}
-      {% endblock content %}
-      <br>
-  	</div>
+    <div class="cc1">
+      <div class = "ccc">
+        {% if messages %}
+          {% for message in messages %}
+            <div class="alert alert-{{ message.tags }}">
+              {{ message }}
+            </div>
+          {% endfor %}
+        {% endif %}
+        <br>
+        {% block content %}
+        {% endblock content %}
+        <br>
+      </div>
+    </div>
       <footer>
       <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
         <ul class="navbar-nav mr-auto">
