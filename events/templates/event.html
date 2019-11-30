@@ -68,7 +68,7 @@
 
                   {% for atendee in signed_up %}
                         <a href="{% url 'profile' atendee.id %}">
-                          <img src="{ static atendee.profile.image.url }" class="rounded-circle" height="40px" alt="">
+                          <img src="{% static atendee.profile.image.url %}" class="rounded-circle" height="40px" alt="">
                           <span class="ml-1">{{atendee.username}}</span></a>
                           <br>
                   {% endfor %}
