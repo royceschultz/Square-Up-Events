@@ -27,83 +27,123 @@
       </div>
       <div class="row">
         <!-- Following -->
+
         <div class="col">
-          <table class="table table-hover">
-            <th>Following {{userProfile.profile.following.count}} users</th>
-            {% for following in userProfile.profile.following.all %}
-              <tr>
-                <td>
-                  <a href="{% url 'profile' following.id %}">{{ following.username }}</a>
-                </td>
-              </tr>
-            {% endfor %}
-          </table>
+
+          <h4>Following {{userProfile.profile.following.count}} users</h4>
+
+          <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#modal_button{{following.id}}">
+            List Following
+          </button>
+
+          <!-- Modal -->
+            <div class="modal fade" id="modal_button{{following.id}}" tabindex="-1" role="dialog" aria-labelledby="exampleModalLongTitle" aria-hidden="true">
+              <div class="modal-dialog" role="document">
+                <div class="modal-content">
+
+                  <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLongTitle"> Following List </h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                      <span aria-hidden="true">&times;</span>
+                    </button>
+                  </div>
+
+                  <div class="overflow-auto" style='max-height:50vh'>
+                    {% for following in userProfile.profile.following.all %}
+                      <br>
+                      <a href="{% url 'profile' following.id %}">{{ following.username }}</a>
+                      <br>
+                      <br>
+                    {% endfor %}
+                  <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                  </div>
+                  </div>
+
+                </div>
+              </div>
+            </div>
+
+
         </div>
+
         <!-- Followers -->
         <div class="col">
-          <table class="table table-hover">
-            <th>{{ userProfile.followers.count }} Followers</th>
-            {% for follower in userProfile.followers.all %}
-              <tr>
-                <td>
-                  <a href="{% url 'profile' follower.user.id %}">{{ follower.user.username }}</a>
-                </td>
-              </tr>
-            {% endfor %}
-          </table>
+
+          <h4>{{ userProfile.followers.count }} Followers</h4>
+
+          <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#modal_button2">
+            List Followers
+          </button>
+
+          <!-- Modal -->
+            <div class="modal fade" id="modal_button2" tabindex="-1" role="dialog" aria-labelledby="exampleModalLongTitle" aria-hidden="true">
+              <div class="modal-dialog" role="document">
+                <div class="modal-content">
+
+                  <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLongTitle"> Followers List </h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                      <span aria-hidden="true">&times;</span>
+                    </button>
+                  </div>
+
+                  <div class="overflow-auto" style='max-height:50vh'>
+                    {% for follower in userProfile.followers.all %}
+                      <br>
+                      <a href="{% url 'profile' follower.user.id %}">{{ follower.user.username }}</a>
+                      <br>
+                      <br>
+                    {% endfor %}
+                  <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                  </div>
+                  </div>
+
+                </div>
+              </div>
+            </div>
+
         </div>
         <!-- Signed Up Events -->
         <div class="col">
-          <table class="table table-hover">
-            <th>Signed Up Events</th>
-            {% for event in userProfile.signed_up.all %}
-              <tr>
-                <td>
-                    <a href="{% url 'event detail' event.id %}">
-                      {{ event.name }}
-                    </a>
-                </td>
-              </tr>
-            {% endfor %}
-          </table>
-        </div>
 
-      <h3>Signed Up Events</h3>
+        <h4>Events</h4>
 
-      <!-- Button trigger modal -->
-      <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModalLong">
-        Events Attending
-      </button>
+        <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#modal_button3">
+          Events Attending
+        </button>
 
-      <!-- Modal -->
-        <div class="modal fade" id="exampleModalLong" tabindex="-1" role="dialog" aria-labelledby="exampleModalLongTitle" aria-hidden="true">
-          <div class="modal-dialog" role="document">
-            <div class="modal-content">
+        <!-- Modal -->
 
-              <div class="modal-header">
-                <h5 class="modal-title" id="exampleModalLongTitle"> Events List </h5>
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                  <span aria-hidden="true">&times;</span>
-                </button>
+          <div class="modal fade" id="modal_button3" tabindex="-1" role="dialog" aria-labelledby="exampleModalLongTitle" aria-hidden="true">
+            <div class="modal-dialog" role="document">
+              <div class="modal-content">
+
+                <div class="modal-header">
+                  <h5 class="modal-title" id="exampleModalLongTitle"> Events List </h5>
+                  <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                  </button>
+                </div>
+
+                <div class="overflow-auto" style='max-height:50vh'>
+
+                  {% for event in userProfile.signed_up.all %}
+                        <br>
+                        <a href="{% url 'event detail' event.id %}"></a>
+                        <br>
+                        <br>
+                  {% endfor %}
+                </div>
+
+                <div class="modal-footer">
+                  <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                </div>
+
               </div>
-
-              <div class="overflow-auto" style='max-height:50vh'>
-                {% for event in user.signed_up.all %}
-                  <br>
-                  <a href="{% url 'event detail' event.id %}">
-                        {{ event.name }}
-                  </a>
-                  <br>
-                  <br>
-                {% endfor %}
-              <div class="modal-footer">
-                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-              </div>
-              </div>
-
             </div>
           </div>
-        </div>
   </div>
 </div>
 
