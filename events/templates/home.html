@@ -8,6 +8,7 @@
       <fieldset>
         {{ form.search|as_crispy_field }}
         {{ form.show_old|as_crispy_field }}
+        {% include "widgets/filterOptions.html" %}
 
       </fieldset>
       <div class="form-group">

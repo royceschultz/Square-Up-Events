@@ -1,0 +1,9 @@
+<!-- filter categories in line on form -->
+<div class="form-group form-inline">
+  <label class="mr-2">Categories: </label>
+  {% for category in form.category %}
+    <div class="form-check-input mr-1 pl-1">
+      {{category}}
+    </div>
+  {% endfor %}
+</div>
