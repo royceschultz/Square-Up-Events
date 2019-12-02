@@ -20,6 +20,7 @@ def home(request):
     show_old = request.GET.get('show_old')
     if not show_old:
         events = events.filter(event_date__gt=datetime.now())
+    #sorting events
     sort_by = request.GET.get('sort')
     if sort_by is not None and sort_by != '':
         sort_by = int(sort_by)
@@ -32,6 +33,11 @@ def home(request):
         events = events.order_by('event_date')
     elif sort_by == 4:
         events = events.order_by('-create_date')
+
+    #category filter
+    categories = request.GET.getlist('category')
+    if categories:
+        events = events.filter(category__in=categories)
 
     return render(request, 'home.html',{'events':events,'sort_by':sort_by,'form':form})
 

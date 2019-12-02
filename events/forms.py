@@ -16,6 +16,18 @@ class EventForm(forms.ModelForm):
 class SearchForm(forms.Form):
     search = forms.CharField(label='',widget=forms.TextInput(attrs={'placeholder': 'search for events'}),max_length=100, required=False)
     show_old = forms.BooleanField(label='show old events', required=False)
+
+    CATEG=[
+        ('Basketball', 'Basketball'),
+        ('Cycling', 'Cycling'),
+        ('Hiking', 'Hiking'),
+        ('Running', 'Running'),
+        ('Soccer', 'Soccer'),
+        ('Tennis', 'Tennis'),
+        ('Other', 'Other'),
+    ]
+    category = forms.ChoiceField(choices=CATEG, widget=forms.CheckboxSelectMultiple(), label = 'Category', required=False)
+
     CHOICES=[   ("1", "Most Popular"),
                 ("2", "Least Popular"),
                 ("3", "Upcoming"),

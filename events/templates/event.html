@@ -4,11 +4,11 @@
   <div class="card-header">
     <!-- Event Name -->
     <h2 class="d-inline">
-      <a href="{% url 'event detail' event.id %}"> {{event.name|capfirst}} </a>
+      <a href="{% url 'event detail' event.id %}">{{event.name|capfirst}}</a>
     </h2>
     <!-- Edit Event Button -->
     {% if event.author.id == user.id %}
-      <a class="btn btn-primary" href="{%url 'event edit' event.id%}">Edit</a>
+      <a class="btn btn-primary btn-sm" href="{%url 'event edit' event.id%}">Edit</a>
     {% endif %}
     <!-- Sign up/Cancel Button -->
     {% if not event.is_past %}
@@ -22,7 +22,7 @@
     {% endif %}
     <div>
       <!-- Category -->
-      <h3 class="mute d-inline">{{event.category}}</h3>
+      <h4 class="mute d-inline">&#10171; {{event.category}}</h4>
       <!-- Author -->
       <h6 class="float-right inline"> posted by:
         <a href="{% url 'profile' event.author.id %}"><img src="{{ event.author.profile.image.url }}" class="rounded-circle" height="40px" alt=""><span class="ml-1">{{event.author}}</span></a>

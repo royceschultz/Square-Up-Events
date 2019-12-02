@@ -6,7 +6,16 @@ from django.contrib.auth.models import User
 # Create your models here.
 class Event(models.Model):
     name = models.CharField(max_length=100)
-    category = models.CharField(max_length=100) # TODO: Implement choices set for category
+    CATEG=[
+        ('Basketball', 'Basketball'),
+        ('Cycling', 'Cycling'),
+        ('Hiking', 'Hiking'),
+        ('Running', 'Running'),
+        ('Soccer', 'Soccer'),
+        ('Tennis', 'Tennis'),
+        ('Other', 'Other'),
+    ]
+    category = models.CharField(max_length=100, choices=CATEG)
     details = models.TextField()
     location = models.TextField()
     event_date = models.DateTimeField()
