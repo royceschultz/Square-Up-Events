@@ -4,11 +4,11 @@
   <div class="card-header">
     <!-- Event Name -->
     <h2 class="d-inline">
-      <a href="{% url 'event detail' event.id %}">{{event.name|capfirst}}</a>
+      <a href="{% url 'event detail' event.id %}"> {{event.name|capfirst}} </a>
     </h2>
     <!-- Edit Event Button -->
     {% if event.author.id == user.id %}
-      <a class="btn btn-primary btn-sm" href="{%url 'event edit' event.id%}">Edit</a>
+      <a class="btn btn-primary" href="{%url 'event edit' event.id%}">Edit</a>
     {% endif %}
     <!-- Sign up/Cancel Button -->
     {% if not event.is_past %}
@@ -44,42 +44,33 @@
     <p class="card-text container border-gray border">{{event.details}}</p>
     <!-- Users Signed Up -->
     {% with signed_up=event.signed_up.all %}
-      <p>Number signed up: {{ signed_up.count }}</p>
-
         <!-- Button trigger modal -->
-        <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#modal_button{{event.id}}">
-          Users Attending
+        <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#modal_button{{event.id}}" >
+        <!--  Users Attending -->
+          {{ signed_up.count }} Users Attending
         </button>
-
         <!-- Modal -->
-
           <div class="modal fade" id="modal_button{{event.id}}" tabindex="-1" role="dialog" aria-labelledby="exampleModalLongTitle" aria-hidden="true">
             <div class="modal-dialog" role="document">
               <div class="modal-content">
-
+                <p class = "modal-dialog">Number signed up: {{ signed_up.count }} </p>
                 <div class="modal-header">
                   <h5 class="modal-title" id="exampleModalLongTitle"> Users List </h5>
                   <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                     <span aria-hidden="true">&times;</span>
                   </button>
                 </div>
-
                 <div class="overflow-auto" style='max-height:50vh'>
-
                   {% for atendee in signed_up %}
                         <a href="{% url 'profile' atendee.id %}">
                           <img src="{{ atendee.profile.image.url }}" class="rounded-circle" height="40px" alt="">
                           <span class="ml-1">{{atendee.username}}</span></a>
                           <br>
                   {% endfor %}
-
-
                 </div>
-
                 <div class="modal-footer">
                   <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
                 </div>
-
               </div>
             </div>
           </div>
