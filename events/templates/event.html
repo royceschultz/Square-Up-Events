@@ -22,7 +22,7 @@
     {% endif %}
     <div>
       <!-- Category -->
-      <h3 class="mute d-inline">{{event.category}}</h3>
+      <h4 class="mute d-inline">&#10171; {{event.category}}</h4>
       <!-- Author -->
       <h6 class="float-right inline"> posted by:
         <a href="{% url 'profile' event.author.id %}"><img src="{{ event.author.profile.image.url }}" class="rounded-circle" height="40px" alt=""><span class="ml-1">{{event.author}}</span></a>
