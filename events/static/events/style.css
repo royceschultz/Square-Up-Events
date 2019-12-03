@@ -1,0 +1,25 @@
+
+html, body {
+    height: 100%;
+    margin-bottom: 0px;
+    padding-bottom:0px;
+  /*  overflow: hidden;*/
+}
+header {
+  height: 80px;
+}
+footer {
+  height: 50px;
+}
+.cc1 {
+  height: calc(100% - 130px);
+  overflow:auto;
+}
+
+.ccc {
+    /*margin-bottom:-130px;*/
+    padding:0px;
+    /*overflow: auto;*/
+    margin-left:100px;
+    margin-right: 100px;
+}
