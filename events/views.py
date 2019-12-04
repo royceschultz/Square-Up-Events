@@ -63,9 +63,9 @@ def create_event(request):
             filled_form.save()
             filled_form.instance.signed_up.add(request.user)
 
-            eventName = filled_form.cleaned_data.get('name')
-            message = f'{eventName} has been created!'
-            messages.success(request, message)
+            event = filled_form.instance
+            message = f'<a href="event/{event.id}"> {event.name} </a> has been created!'
+            messages.success(request, mark_safe(message))
             return redirect('home')
         else:
             messages.warning(request,'Something went wrong!')
