@@ -67,10 +67,14 @@
                 <div class="overflow-auto" style='max-height:50vh'>
 
                   {% for atendee in signed_up %}
+                      
+                        <br>
                         <a href="{% url 'profile' atendee.id %}">
                           <img src="{{ atendee.profile.image.url }}" class="rounded-circle" height="40px" alt="">
                           <span class="ml-1">{{atendee.username}}</span></a>
-                          <br>
+                        <br>
+                        <br>
+
                   {% endfor %}
 
 
