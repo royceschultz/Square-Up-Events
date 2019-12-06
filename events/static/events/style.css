@@ -1,10 +1,27 @@
+
+
 html,body {
   display: flex;
   flex-direction: column;
   min-height: 100vh;
+  background-color: #333333;
+  color: BurlyWood;
 }
+/*
+html, body {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+}
+*/
+
 footer {
   margin: auto auto 0 auto;
   flex-shrink: 0;
   width: 100%;
+}
+
+.card-text container border-gray border {
+  background-color: black;
+  color: gray;
 }
