@@ -2,7 +2,7 @@
 <div class="form-group form-inline btn-group btn-group-toggle">
   <label class="mr-2">Sort By: </label>
   {% for choice in form.sort %}
-  <button for="{{choice.id_for_label}}" class="btn btn-outline-primary {% if sort_by == forloop.counter %}active{% endif %}">
+  <button for="{{choice.id_for_label}}" class="btn btn-outline-secondary {% if sort_by == forloop.counter %}active{% endif %}">
     {{choice}}
   </button>
   {% endfor %}

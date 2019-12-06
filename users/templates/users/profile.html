@@ -6,7 +6,7 @@
 
 {% if userProfile.id == user.id %}
   <div class = 'text-right'>
-    <a href = "{% url 'edit profile' %}" class="btn btn-outline-secondary">Edit Profile</a>
+    <a href = "{% url 'edit profile' %}" class="btn btn-secondary">Edit Profile</a>
   </div>
 {% else %}
   {% if userProfile in user.profile.following.all %}
@@ -33,7 +33,7 @@
             {% for following in userProfile.profile.following.all %}
               <tr>
                 <td>
-                  <a href="{% url 'profile' following.id %}">{{ following.username }}</a>
+                  <a href="{% url 'profile' following.id %}" style="color: #F8F8FF">{{ following.username }}</a>
                 </td>
               </tr>
             {% endfor %}
@@ -46,7 +46,7 @@
             {% for follower in userProfile.followers.all %}
               <tr>
                 <td>
-                  <a href="{% url 'profile' follower.user.id %}">{{ follower.user.username }}</a>
+                  <a href="{% url 'profile' follower.user.id %}" style="color: #F8F8FF">{{ follower.user.username }}</a>
                 </td>
               </tr>
             {% endfor %}
@@ -59,7 +59,7 @@
             {% for event in userProfile.signed_up.all %}
               <tr>
                 <td>
-                    <a href="{% url 'event detail' event.id %}">
+                    <a href="{% url 'event detail' event.id %}" style="color: #F8F8FF">
                       {{ event.name }}
                     </a>
                 </td>
@@ -71,14 +71,14 @@
       <h3>Signed Up Events</h3>
 
       <!-- Button trigger modal -->
-      <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModalLong">
+      <button type="button" class="btn btn-secondary" data-toggle="modal" data-target="#exampleModalLong">
         Events Attending
       </button>
 
       <!-- Modal -->
         <div class="modal fade" id="exampleModalLong" tabindex="-1" role="dialog" aria-labelledby="exampleModalLongTitle" aria-hidden="true">
           <div class="modal-dialog" role="document">
-            <div class="modal-content">
+            <div class="modal-content bg-secondary mb-3">
 
               <div class="modal-header">
                 <h5 class="modal-title" id="exampleModalLongTitle"> Events List </h5>
@@ -90,7 +90,7 @@
               <div class="overflow-auto" style='max-height:50vh'>
                 {% for event in user.signed_up.all %}
                   <br>
-                  <a href="{% url 'event detail' event.id %}">
+                  <a href="{% url 'event detail' event.id %}" style="color: #F8F8FF">
                         {{ event.name }}
                   </a>
                   <br>
@@ -98,7 +98,7 @@
                 {% endfor %}
               </div>
               <div class="modal-footer">
-                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                <button type="button" class="btn btn-dark" data-dismiss="modal">Close</button>
               </div>
               </div>
             </div>

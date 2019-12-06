@@ -1,18 +1,18 @@
 {% load static %}
 
-<div class="card my-3">
+<div class="card my-3 bg-secondary mb-3">
   <div class="card-header">
     <!-- Event Name -->
     <h2 class="d-inline">
-      <a href="{% url 'event detail' event.id %}"> {{event.name|capfirst}} </a>
+      <a href="{% url 'event detail' event.id %}" style="color: #F8F8FF"> {{event.name|capfirst}} </a>
     </h2>
     <!-- Edit Event Button -->
     {% if event.author.id == user.id %}
-      <a class="btn btn-primary" href="{%url 'event edit' event.id%}">Edit</a>
+      <a class="btn btn-secondary" href="{%url 'event edit' event.id%}">Edit</a>
     {% endif %}
     <!-- Sign up/Cancel Button -->
     {% if not event.is_past %}
-      <div class="float-right">
+      <div class="float-right ">
         {% if user in event.signed_up.all %}
           {% include "widgets/signUpButton.html" with event=event signed_up=True%}
         {% else %}
@@ -25,11 +25,11 @@
       <h4 class="mute d-inline">&#10171; {{event.category}}</h4>
       <!-- Author -->
       <h6 class="float-right inline"> posted by:
-        <a href="{% url 'profile' event.author.id %}"><img src="{{ event.author.profile.image.url }}" class="rounded-circle" height="40px" alt=""><span class="ml-1">{{event.author}}</span></a>
+        <a href="{% url 'profile' event.author.id %}" style="color: #F8F8FF"><img src="{{ event.author.profile.image.url }}" class="rounded-circle" height="40px" alt=""><span class="ml-1">{{event.author}}</span></a>
       </h6>
     </div>
   </div>
-  <div class="card-body text-nowrap">
+  <div class = "card-body text-nowrap">
     <!-- Location -->
     <p class="card-text">
       <img src="{% static "events/location.png" %}" class="float-left" height="27px" alt="">
@@ -45,14 +45,14 @@
     <!-- Users Signed Up -->
     {% with signed_up=event.signed_up.all %}
         <!-- Button trigger modal -->
-        <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#modal_button{{event.id}}" >
+        <button type="button" class="btn btn-dark" data-toggle="modal" data-target="#modal_button{{event.id}}" >
         <!--  Users Attending -->
           {{ signed_up.count }} Users Attending
         </button>
         <!-- Modal -->
           <div class="modal fade" id="modal_button{{event.id}}" tabindex="-1" role="dialog" aria-labelledby="exampleModalLongTitle" aria-hidden="true">
             <div class="modal-dialog" role="document">
-              <div class="modal-content">
+              <div class="modal-content bg-dark mb-3">
                 <p class = "modal-dialog">Number signed up: {{ signed_up.count }} </p>
                 <div class="modal-header">
                   <h5 class="modal-title" id="exampleModalLongTitle"> Users List </h5>
@@ -77,7 +77,7 @@
     {% endwith %}
     <br>
     <!-- Misc. Info -->
-    <p class="card-text text-muted d-inline">Created: {{event.create_date}}</p>
-    <p class="card-text text-muted d-inline">Last Modified: {{event.last_modified}}</p>
+    <p class="card-text text-white d-inline">Created: {{event.create_date}}</p>
+    <p class="card-text text-white d-inline">Last Modified: {{event.last_modified}}</p>
   </div>
 </div>
