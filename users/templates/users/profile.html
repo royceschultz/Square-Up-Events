@@ -18,7 +18,6 @@
 
 <br>
   <div class="text-center">
-    <div class="">
       <img src="{{ userProfile.profile.image.url }}" class="rounded-circle account-image" height="">
       <div>
         <br>
@@ -27,84 +26,20 @@
       </div>
       <div class="row">
         <!-- Following -->
+
         <div class="col">
-          <table class="table table-hover">
-            <th>Following {{userProfile.profile.following.count}} users</th>
-            {% for following in userProfile.profile.following.all %}
-              <tr>
-                <td>
-                  <a href="{% url 'profile' following.id %}">{{ following.username }}</a>
-                </td>
-              </tr>
-            {% endfor %}
-          </table>
+          {% include 'widgets/userModal.html' with name='following' users=userProfile.profile.following.all text='Following' %}
         </div>
+
         <!-- Followers -->
         <div class="col">
-          <table class="table table-hover">
-            <th>{{ userProfile.followers.count }} Followers</th>
-            {% for follower in userProfile.followers.all %}
-              <tr>
-                <td>
-                  <a href="{% url 'profile' follower.user.id %}">{{ follower.user.username }}</a>
-                </td>
-              </tr>
-            {% endfor %}
-          </table>
+          {% include 'widgets/userModal.html' with name='followers' users=userProfile.followers.all text='Followers'%}
         </div>
         <!-- Signed Up Events -->
         <div class="col">
-          <table class="table table-hover">
-            <th>Signed Up Events</th>
-            {% for event in userProfile.signed_up.all %}
-              <tr>
-                <td>
-                    <a href="{% url 'event detail' event.id %}">
-                      {{ event.name }}
-                    </a>
-                </td>
-              </tr>
-            {% endfor %}
-          </table>
+          {% include 'widgets/eventModal.html' with  name='events' events=userProfile.signed_up.all%}
         </div>
-
-      <h3>Signed Up Events</h3>
-
-      <!-- Button trigger modal -->
-      <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModalLong">
-        Events Attending
-      </button>
-
-      <!-- Modal -->
-        <div class="modal fade" id="exampleModalLong" tabindex="-1" role="dialog" aria-labelledby="exampleModalLongTitle" aria-hidden="true">
-          <div class="modal-dialog" role="document">
-            <div class="modal-content">
-
-              <div class="modal-header">
-                <h5 class="modal-title" id="exampleModalLongTitle"> Events List </h5>
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                  <span aria-hidden="true">&times;</span>
-                </button>
-              </div>
-
-              <div class="overflow-auto" style='max-height:50vh'>
-                {% for event in user.signed_up.all %}
-                  <br>
-                  <a href="{% url 'event detail' event.id %}">
-                        {{ event.name }}
-                  </a>
-                  <br>
-                  <br>
-                {% endfor %}
-              </div>
-              <div class="modal-footer">
-                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-              </div>
-              </div>
-            </div>
-          </div>
-        </div>
-  </div>
-</div>
+      </div>
+    </div>
 
 {% endblock content%}
