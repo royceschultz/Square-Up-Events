@@ -18,7 +18,6 @@
 
 <br>
   <div class="text-center">
-    <div class="">
       <img src="{{ userProfile.profile.image.url }}" class="rounded-circle account-image" height="">
       <div>
         <br>
@@ -29,122 +28,18 @@
         <!-- Following -->
 
         <div class="col">
-
-          <h4>Following {{userProfile.profile.following.count}} users</h4>
-
-          <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#modal_button{{following.id}}">
-            List Following
-          </button>
-
-          <!-- Modal -->
-            <div class="modal fade" id="modal_button{{following.id}}" tabindex="-1" role="dialog" aria-labelledby="exampleModalLongTitle" aria-hidden="true">
-              <div class="modal-dialog" role="document">
-                <div class="modal-content">
-
-                  <div class="modal-header">
-                    <h5 class="modal-title" id="exampleModalLongTitle"> Following List </h5>
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                      <span aria-hidden="true">&times;</span>
-                    </button>
-                  </div>
-
-                  <div class="overflow-auto" style='max-height:50vh'>
-                    {% for following in userProfile.profile.following.all %}
-                      <br>
-                      <a href="{% url 'profile' following.id %}">{{ following.username }}</a>
-                      <br>
-                      <br>
-                    {% endfor %}
-                  <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                  </div>
-                  </div>
-
-                </div>
-              </div>
-            </div>
-
-
+          {% include 'widgets/userModal.html' with name='following' users=userProfile.profile.following.all text='Following' %}
         </div>
 
         <!-- Followers -->
         <div class="col">
-
-          <h4>{{ userProfile.followers.count }} Followers</h4>
-
-          <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#modal_button2">
-            List Followers
-          </button>
-
-          <!-- Modal -->
-            <div class="modal fade" id="modal_button2" tabindex="-1" role="dialog" aria-labelledby="exampleModalLongTitle" aria-hidden="true">
-              <div class="modal-dialog" role="document">
-                <div class="modal-content">
-
-                  <div class="modal-header">
-                    <h5 class="modal-title" id="exampleModalLongTitle"> Followers List </h5>
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                      <span aria-hidden="true">&times;</span>
-                    </button>
-                  </div>
-
-                  <div class="overflow-auto" style='max-height:50vh'>
-                    {% for follower in userProfile.followers.all %}
-                      <br>
-                      <a href="{% url 'profile' follower.user.id %}">{{ follower.user.username }}</a>
-                      <br>
-                      <br>
-                    {% endfor %}
-                  <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                  </div>
-                  </div>
-
-                </div>
-              </div>
-            </div>
-
+          {% include 'widgets/userModal.html' with name='followers' users=userProfile.followers.all text='Followers'%}
         </div>
         <!-- Signed Up Events -->
         <div class="col">
-
-        <h4>Events</h4>
-
-        <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#modal_button3">
-          Events Attending
-        </button>
-
-        <!-- Modal -->
-
-          <div class="modal fade" id="modal_button3" tabindex="-1" role="dialog" aria-labelledby="exampleModalLongTitle" aria-hidden="true">
-            <div class="modal-dialog" role="document">
-              <div class="modal-content">
-
-                <div class="modal-header">
-                  <h5 class="modal-title" id="exampleModalLongTitle"> Events List </h5>
-                  <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                    <span aria-hidden="true">&times;</span>
-                  </button>
-                </div>
-
-                <div class="overflow-auto" style='max-height:50vh'>
-
-                  {% for event in userProfile.signed_up.all %}
-                        <br>
-                        <a href="{% url 'event detail' event.id %}"></a>
-                        <br>
-                        <br>
-                  {% endfor %}
-                </div>
-
-                <div class="modal-footer">
-                  <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                </div>
-
-              </div>
-            </div>
-          </div>
-  </div>
-</div>
+          {% include 'widgets/eventModal.html' with  name='events' events=userProfile.signed_up.all%}
+        </div>
+      </div>
+    </div>
 
 {% endblock content%}
