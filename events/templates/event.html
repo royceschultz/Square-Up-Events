@@ -25,7 +25,7 @@
       <h4 class="mute d-inline">&#10171; {{event.category}}</h4>
       <!-- Author -->
       <h6 class="float-right inline"> posted by:
-        <a href="{% url 'profile' event.author.id %}"><img src="{{ event.author.profile.image.url }}" class="rounded-circle" height="40px" alt=""><span class="ml-1">{{event.author}}</span></a>
+        <a href="{% url 'profile' event.author.id %}"><img src="{% static event.author.profile.image.url %}" class="rounded-circle" height="40px" alt=""><span class="ml-1">{{event.author}}</span></a>
       </h6>
     </div>
   </div>
@@ -68,7 +68,7 @@
 
                   {% for atendee in signed_up %}
                         <a href="{% url 'profile' atendee.id %}">
-                          <img src="{{ atendee.profile.image.url }}" class="rounded-circle" height="40px" alt="">
+                          <img src="{% static atendee.profile.image.url %}" class="rounded-circle" height="40px" alt="">
                           <span class="ml-1">{{atendee.username}}</span></a>
                           <br>
                   {% endfor %}
