@@ -51,7 +51,9 @@
                   <div class="overflow-auto" style='max-height:50vh'>
                     {% for following in userProfile.profile.following.all %}
                       <br>
-                      <a href="{% url 'profile' following.id %}">{{ following.username }}</a>
+                      <a href="{% url 'profile' following.id %}">
+                        <img src="{{ following.profile.image.url }}" class="rounded-circle" height="40px" alt="">
+                        <span class="ml-1">{{following.username}}</span></a>
                       <br>
                       <br>
                     {% endfor %}
@@ -91,7 +93,9 @@
                   <div class="overflow-auto" style='max-height:50vh'>
                     {% for follower in userProfile.followers.all %}
                       <br>
-                      <a href="{% url 'profile' follower.user.id %}">{{ follower.user.username }}</a>
+                      <a href="{% url 'profile' follower.user.id %}">
+                        <img src="{{ follower.profile.image.url }}" class="rounded-circle" height="40px" alt="">
+                        <span class="ml-1">{{ follower.user.username}}</span></a>
                       <br>
                       <br>
                     {% endfor %}
