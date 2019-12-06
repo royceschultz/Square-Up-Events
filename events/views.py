@@ -5,6 +5,7 @@ from django.contrib import messages
 from django.shortcuts import redirect
 from django.db.models import Q, Count
 from django.contrib.auth.decorators import login_required
+from django.utils.safestring import mark_safe
 
 from .models import Event
 from .forms import EventForm, SearchForm
@@ -61,8 +62,9 @@ def create_event(request):
             filled_form.save()
             filled_form.instance.signed_up.add(request.user)
 
-            eventName = filled_form.cleaned_data.get('name')
-            messages.success(request,f'{eventName} has been created!')
+            event = filled_form.instance
+            message = f'<a href="event/{event.id}"> {event.name} </a> has been created!'
+            messages.success(request, mark_safe(message))
             return redirect('home')
         else:
             messages.warning(request,'Something went wrong!')
@@ -87,7 +89,8 @@ def edit_event(request, id):
             form = EventForm( request.POST, instance =event)
             if form.is_valid():
                 form.save()
-                messages.success(request,f'Changes have been made to your event')
+                message = f'Changes have been made to <a href="event/{event.id}"> {event.name} </a>'
+                messages.success(request,mark_safe(message))
                 return redirect('event detail',id)
             else:
                 messages.warning(request,'Something is wrong with your form')
@@ -110,11 +113,11 @@ def signup(request):
             raise Http404('Event does\'t exist')
         if request.POST.get('signed_up'):
             event.signed_up.remove(request.user)
-            message = f'Canceled on {event.name}'
+            message = f'Canceled on <a href="event/{event.id}"> {event.name} </a>'
         else:
             event.signed_up.add(request.user)
-            message = f'Signed up for {event.name}'
+            message = f'Signed up for <a href="event/{event.id}"> {event.name} </a>'
         event.save()
-        messages.success(request,message)
+        messages.success(request,mark_safe(message))
         return redirect('home')
     return redirect('home')

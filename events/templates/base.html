@@ -19,8 +19,11 @@
     <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.6/umd/popper.min.js" integrity="sha384-wHAiFfRlMFy6i5SRaxvfOCifBUQy1xHdJ/yoi7FRNXMRBu5WHdZYu1hA6ZOblgut" crossorigin="anonymous"></script>
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/js/bootstrap.min.js" integrity="sha384-B0UglyR+jN6CkvvICOB2joaf5I4l3gm9GU6Hc1og6Ls7i6U/mkkaduKaBhlAXv9k" crossorigin="anonymous"></script>
+    <link rel = "stylesheet" type = "text/css" href = "{%static 'events/style.css' %}">
+
   </head>
   <body>
+    <header>
     <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
       <a class="navbar-brand" href="{%url 'home'%}">
         <img src="{% static "events/logo.png" %}" alt="" height="50px">
@@ -44,25 +47,28 @@
         {% endif %}
       </div>
     </nav>
-    <div class="container">
+  </header>
+    <div class = "container">
       {% if messages %}
-        {% for message in messages %}
-          <div class="alert alert-{{ message.tags }}">
-            {{ message }}
-          </div>
-        {% endfor %}
+      {% for message in messages %}
+        <div class="alert alert-{{ message.tags }}">
+      {{ message }}
+        </div>
+      {% endfor %}
       {% endif %}
-      <br>
+        <br>
       {% block content %}
       {% endblock content %}
-      <br>
-  	</div>
-    <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
-      <ul class="navbar-nav mr-auto">
-        <li class="nav-item">
-          <a class="nav-link" href="{%url 'about'%}">About the Team</a>
-        </li>
-      </ul>
-    </nav>
-  </body>
+        <br>
+    </div>
+    <footer>
+      <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+        <ul class="navbar-nav mr-auto">
+          <li class="nav-item">
+            <a class="nav-link" href="{%url 'about'%}">About the Team</a>
+          </li>
+        </ul>
+      </nav>
+    </footer>
+   </body>
 </html>

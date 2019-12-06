@@ -1,0 +1,30 @@
+<button type="button" class="btn btn-primary" data-toggle="modal" data-target="#modal_{{name}}">
+  {{events.count}} Events
+</button>
+
+<!-- Modal -->
+  <div class="modal fade" id="modal_{{name}}" tabindex="-1" role="dialog" aria-labelledby="exampleModalLongTitle" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+      <div class="modal-content">
+
+        <div class="modal-header">
+          <h5 class="modal-title" id="exampleModalLongTitle"> Following List </h5>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+
+        <div class="overflow-auto" style='max-height:50vh'>
+          {% for event in events %}
+            <div class="py-3">
+              <a href="{% url 'event detail' event.id %}">{{ event.name }}</a>
+            </div>
+          {% endfor %}
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+        </div>
+        </div>
+
+      </div>
+    </div>
+  </div>
