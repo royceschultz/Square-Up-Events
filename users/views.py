@@ -4,6 +4,7 @@ from django.contrib.auth.decorators import login_required
 from django.http import Http404
 from django.contrib.auth.forms import PasswordChangeForm
 from django.contrib.auth import update_session_auth_hash
+from django.utils.safestring import mark_safe
 from.models import User
 from .forms import (
     UserRegisterForm,
@@ -90,12 +91,12 @@ def followUser(request):
             followUser = User.objects.get(id=followUserId)
             if unfollow:
                 user.profile.following.remove(followUser)
-                message = f'unfollowed {followUser.username}'
+                message = f'unfollowed <a href="profile/{followUser.id}"> {followUser.username} </a>'
             else:
                 user.profile.following.add(followUser)
-                message = f'followed {followUser.username}'
+                message = f'followed <a href="profile/{followUser.id}"> {followUser.username} </a>'
             user.save()
-            messages.success(request,message)
+            messages.success(request, mark_safe(message))
         except User.DoesNotExist:
             raise Http404('Could not find user')
         return redirect('profile', followUserId)

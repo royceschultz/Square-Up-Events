@@ -64,7 +64,7 @@ def create_event(request):
 
             event = filled_form.instance
             message = f'<a href="event/{event.id}"> {event.name} </a> has been created!'
-            messages.success(request, make_safe(message))
+            messages.success(request, mark_safe(message))
             return redirect('home')
         else:
             messages.warning(request,'Something went wrong!')
@@ -90,7 +90,7 @@ def edit_event(request, id):
             if form.is_valid():
                 form.save()
                 message = f'Changes have been made to <a href="event/{event.id}"> {event.name} </a>'
-                messages.success(request,make_safe(message))
+                messages.success(request,mark_safe(message))
                 return redirect('event detail',id)
             else:
                 messages.warning(request,'Something is wrong with your form')
@@ -118,6 +118,6 @@ def signup(request):
             event.signed_up.add(request.user)
             message = f'Signed up for <a href="event/{event.id}"> {event.name} </a>'
         event.save()
-        messages.success(request,make_safe(message))
+        messages.success(request,mark_safe(message))
         return redirect('home')
     return redirect('home')
